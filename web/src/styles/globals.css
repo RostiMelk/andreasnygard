@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-white;
+  }
+}
+
+@layer components {
+  .container {
+    @apply max-w-full;
+  }
+  .two-col {
+    @apply grid grid-cols-2 gap-8;
+  }
+}
+
+@layer utilities {
+  .blend-invert {
+    @apply mix-blend-difference invert;
+  }
+  .external-link {
+    @apply relative after:pl-1 after:align-super after:text-[.5em] after:content-['↗️'] hover:underline;
+  }
+}
