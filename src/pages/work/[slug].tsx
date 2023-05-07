@@ -3,7 +3,38 @@ import type { GetStaticPaths, GetStaticProps } from "next";
 import { client, groq, urlFor, type SanityDocument } from "@/lib/sanity.client";
 import { Layout } from "@/components/views";
 
-const Work = ({ work }: { work: SanityDocument }) => {
+type Meta = {
+  title?: string;
+  description?: string;
+};
+
+type ImageRow = {
+  _key: string;
+  asset: {
+    alt?: string;
+    metadata?: {
+      dimensions?: {
+        width?: number;
+        height?: number;
+      };
+    };
+  };
+};
+
+type ImageRows = {
+  _key: string;
+  imageRow?: ImageRow[];
+};
+
+type WorkProps = {
+  work: SanityDocument & {
+    title?: string;
+    meta?: Meta[];
+    imageRows?: ImageRows[];
+  };
+};
+
+const Work = ({ work }: WorkProps) => {
   const { title, meta, imageRows } = work ?? {};
 
   console.log(work);
@@ -57,9 +88,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getStaticProps: GetStaticProps<WorkProps> = async (context) => {
   const { slug = "" } = context.params ?? {};
-  const work: SanityDocument = await client.fetch(
+  const work: SanityDocument & {
+    title?: string;
+    meta?: Meta[];
+    imageRows?: ImageRows[];
+  } = await client.fetch(
     groq`
       *[_type == "work" && slug.current == $slug][0] {
         ...,
