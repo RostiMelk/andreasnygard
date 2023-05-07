@@ -70,7 +70,7 @@ export const getStaticProps: GetStaticProps<WorkProps> = async (context) => {
             "asset": asset->,
           }
         }
-        
+      }
     `,
     { slug }
   );
