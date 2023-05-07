@@ -75,7 +75,7 @@ export const Layout = ({
         ]}
       />
 
-      <main>{children}</main>
+      {children}
 
       <Footer />
     </>
