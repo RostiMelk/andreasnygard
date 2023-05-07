@@ -1,43 +1,12 @@
-import Image from "next/image";
 import type { GetStaticPaths, GetStaticProps } from "next";
-import { client, groq, urlFor, type SanityDocument } from "@/lib/sanity.client";
+import Image from "next/image";
+
+import { client, groq, urlFor } from "@/lib/sanity.client";
 import { Layout } from "@/components/views";
-
-type Meta = {
-  title?: string;
-  description?: string;
-};
-
-type ImageRow = {
-  _key: string;
-  asset: {
-    alt?: string;
-    metadata?: {
-      dimensions?: {
-        width?: number;
-        height?: number;
-      };
-    };
-  };
-};
-
-type ImageRows = {
-  _key: string;
-  imageRow?: ImageRow[];
-};
-
-type WorkProps = {
-  work: SanityDocument & {
-    title?: string;
-    meta?: Meta[];
-    imageRows?: ImageRows[];
-  };
-};
+import type { WorkProps } from "./types";
 
 const Work = ({ work }: WorkProps) => {
   const { title, meta, imageRows } = work ?? {};
-
-  console.log(work);
 
   return (
     <Layout>
@@ -90,11 +59,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps<WorkProps> = async (context) => {
   const { slug = "" } = context.params ?? {};
-  const work: SanityDocument & {
-    title?: string;
-    meta?: Meta[];
-    imageRows?: ImageRows[];
-  } = await client.fetch(
+  const work: WorkProps["work"] = await client.fetch(
     groq`
       *[_type == "work" && slug.current == $slug][0] {
         ...,
@@ -105,7 +70,7 @@ export const getStaticProps: GetStaticProps<WorkProps> = async (context) => {
             "asset": asset->,
           }
         }
-      }
+        
     `,
     { slug }
   );
