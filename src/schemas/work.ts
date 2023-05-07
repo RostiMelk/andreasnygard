@@ -49,12 +49,17 @@ export default defineType({
               title: "title",
               description: "description",
             },
-            prepare(selection) {
+            prepare({
+              title,
+              description,
+            }: {
+              title?: string;
+              description?: string;
+            }) {
+              const subtitle = title ? description : "(No title provided)";
               return {
-                title: selection.title || selection.description,
-                subtitle: selection.title
-                  ? selection.description
-                  : "(No title provided)",
+                title: title || subtitle,
+                subtitle,
               };
             },
           },
@@ -102,8 +107,7 @@ export default defineType({
             select: {
               images: "imageRow",
             },
-            prepare(selection) {
-              const { images } = selection;
+            prepare({ images }: { images?: string[] }) {
               const count = images ? images.length : 0;
               return {
                 title: `${count} image${count === 1 ? "" : "s"}`,
