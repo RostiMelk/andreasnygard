@@ -35,7 +35,8 @@ const Work = ({ work }: WorkProps) => {
                   width={asset?.metadata?.dimensions?.width ?? 0}
                   height={asset?.metadata?.dimensions?.height ?? 0}
                   alt={asset?.alt ?? ""}
-                  className="h-full"
+                  className="h-full flex-1"
+                  quality={90}
                 />
               ))}
             </div>
