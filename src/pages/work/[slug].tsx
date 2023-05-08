@@ -1,12 +1,14 @@
 import type { GetStaticPaths, GetStaticProps } from "next";
 import Image from "next/image";
 
-import { client, groq, urlFor } from "@/lib/sanity.client";
-import { Layout } from "@/components/views";
 import type { WorkProps } from "./types";
+import { client, groq, urlFor } from "@/lib/sanity.client";
+import { Layout } from "@/components";
 
 const Work = ({ work }: WorkProps) => {
   const { title, meta, imageRows } = work ?? {};
+
+  console.log(work);
 
   return (
     <Layout>
@@ -16,10 +18,18 @@ const Work = ({ work }: WorkProps) => {
             {title && <h1 className="text-lg">{title}</h1>}
           </div>
           <div className="grid grid-cols-5 gap-4">
-            {meta?.map(({ title, description }, index) => (
+            {meta?.map(({ title, description, link }, index) => (
               <div key={index}>
                 <h4 className="text-base">{title || "ㅤ"}</h4>
-                <p className="text-base">{description}</p>
+                <p className="text-base">
+                  {typeof link === "string" ? (
+                    <a href={link} className="external-link">
+                      {description}
+                    </a>
+                  ) : (
+                    description
+                  )}
+                </p>
               </div>
             ))}
           </div>
@@ -68,7 +78,7 @@ export const getStaticProps: GetStaticProps<WorkProps> = async (context) => {
           ...,
           "imageRow": imageRow[] {
             ...,
-            "asset": asset->,
+            "asset": asset-> 
           }
         }
       }

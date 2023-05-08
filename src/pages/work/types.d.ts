@@ -1,21 +1,14 @@
-import type { SanityDocument } from "@sanity/client";
+import type { SanityDocument, SanityImageAssetDocument } from "@sanity/client";
 
 export interface Meta {
   title?: string;
   description?: string;
+  link?: string;
 }
 
 export interface ImageRow {
   _key: string;
-  asset: {
-    alt?: string;
-    metadata?: {
-      dimensions?: {
-        width?: number;
-        height?: number;
-      };
-    };
-  };
+  asset: SanityImageAssetDocument;
 }
 
 export interface ImageRows {

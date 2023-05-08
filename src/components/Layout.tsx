@@ -1,7 +1,7 @@
 import Head from "next/head";
 import React from "react";
 
-import { Header, Footer } from "@/components/views";
+import { Header, Footer } from "@/components";
 
 interface Props {
   children: React.ReactNode;

@@ -9,15 +9,33 @@ export default defineType({
       name: "title",
       title: "Title",
       type: "string",
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "slug",
       title: "Slug",
       type: "slug",
+      validation: (Rule) => Rule.required(),
       options: {
         source: "title",
         maxLength: 96,
       },
+    }),
+
+    defineField({
+      name: "mainImage",
+      title: "Main image",
+      type: "image",
+      validation: (Rule) => Rule.required(),
+      options: {
+        hotspot: true,
+      },
+    }),
+    defineField({
+      name: "publishedAt",
+      title: "Published at",
+      type: "datetime",
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "meta",
@@ -66,25 +84,11 @@ export default defineType({
         },
       ],
     }),
-
-    defineField({
-      name: "mainImage",
-      title: "Main image",
-      type: "image",
-      options: {
-        hotspot: true,
-      },
-    }),
-    defineField({
-      name: "publishedAt",
-      title: "Published at",
-      type: "datetime",
-    }),
-    defineField({
-      name: "body",
-      title: "Body",
-      type: "blockContent",
-    }),
+    // defineField({
+    //   name: "body",
+    //   title: "Body",
+    //   type: "blockContent",
+    // }),
     defineField({
       name: "imageRows",
       title: "Image rows",
