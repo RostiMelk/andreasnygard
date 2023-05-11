@@ -23,14 +23,14 @@ export const PhysicsImageRow = ({
   useEffect(() => {
     const container = containerRef.current;
     const image = imageRef.current;
-    const title = titleRef.current;
-    if (!container || !image || !title) return;
+    const wrapper = wrapperRef.current;
+    if (!container || !image || !wrapper) return;
 
     // Get the width of the container and the image
     const containerWidth = container.offsetWidth;
 
     // Calculate maximum image size
-    const MAX_PIXELS = 500000;
+    const MAX_PIXELS = 300000;
     const aspectRatio = image.naturalWidth / image.naturalHeight;
     const maxDimension = Math.sqrt(MAX_PIXELS);
 
@@ -45,7 +45,7 @@ export const PhysicsImageRow = ({
       width = height * aspectRatio;
     }
 
-    // Calculate a random X position for the image within the container
+    // Calculate a random X position for the wrapper within the container
     const x = Math.floor(Math.random() * (containerWidth - width));
 
     // Calculate a random margin top for the container
@@ -54,15 +54,14 @@ export const PhysicsImageRow = ({
     // Set the size and position of the image
     image.style.width = `${width}px`;
     image.style.height = `${height}px`;
-    image.style.left = `${x}px`;
 
     // Set the margin top of the container
     container.style.marginTop = `${marginTop}px`;
 
-    // Set the left position of the title
-    title.style.left = `${x}px`;
-    title.style.width = `${width}px`;
-  }, [containerRef, imageRef, titleRef]);
+    // Set the left position of the wrapper
+    wrapper.style.transform = `translateX(${x}px`;
+    wrapper.style.width = `${width}px`;
+  }, [containerRef, imageRef, wrapperRef]);
 
   return (
     <div className="two-col relative">
