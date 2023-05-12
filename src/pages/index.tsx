@@ -6,6 +6,7 @@ import { client, groq, urlFor } from "@/lib/sanity.client";
 import { Layout, PhysicsImageRow } from "@/components";
 
 const Home = ({ work }: HomeProps) => {
+  console.log(work);
   return (
     <Layout
       headerContinuation={
@@ -27,6 +28,8 @@ const Home = ({ work }: HomeProps) => {
             <PhysicsImageRow
               key={_key}
               imageUrl={urlFor(mainImage)?.url() ?? ""}
+              imageWidth={mainImage?.metadata?.dimensions?.width ?? 0}
+              imageHeight={mainImage?.metadata?.dimensions?.height ?? 0}
               align={align}
               title={title}
               href={`/work/${slug?.current}`}
@@ -45,7 +48,7 @@ export const getStaticProps: GetStaticProps = async () => {
       title,
       slug,
       mainImage{
-        asset->
+        ...asset->
       }
     }
   `);

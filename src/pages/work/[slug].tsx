@@ -44,7 +44,7 @@ const Work = ({ work }: WorkProps) => {
                   src={urlFor(asset)?.url() ?? ""}
                   width={asset?.metadata?.dimensions?.width ?? 0}
                   height={asset?.metadata?.dimensions?.height ?? 0}
-                  alt={asset?.alt ?? ""}
+                  alt={""} // TODO: Add alt text
                   className="h-full flex-1"
                   quality={90}
                 />
@@ -78,7 +78,7 @@ export const getStaticProps: GetStaticProps<WorkProps> = async (context) => {
           ...,
           "imageRow": imageRow[] {
             ...,
-            "asset": asset-> 
+            asset-> 
           }
         }
       }

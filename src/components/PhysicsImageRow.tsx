@@ -7,6 +7,8 @@ interface Props {
   title: string;
   href: string;
   imageUrl: string;
+  imageWidth: number;
+  imageHeight: number;
   align: "left" | "right";
 }
 
@@ -14,6 +16,8 @@ export const PhysicsImageRow = ({
   title,
   href,
   imageUrl,
+  imageWidth,
+  imageHeight,
   align = "left",
 }: Props) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -29,39 +33,21 @@ export const PhysicsImageRow = ({
     // Get the width of the container and the image
     const containerWidth = container.offsetWidth;
 
-    // Calculate maximum image size
-    const MAX_PIXELS = 300000;
-    const aspectRatio = image.naturalWidth / image.naturalHeight;
-    const maxDimension = Math.sqrt(MAX_PIXELS);
-
-    let width, height;
-    if (aspectRatio >= 1) {
-      // If the image is wider than tall, limit the width and calculate the height
-      width = Math.min(maxDimension, image.naturalWidth * 1.8);
-      height = width / aspectRatio;
-    } else {
-      // If the image is taller than wide, limit the height and calculate the width
-      height = Math.min(maxDimension, image.naturalHeight * 1.8);
-      width = height * aspectRatio;
-    }
-
     // Calculate a random X position for the wrapper within the container
-    const x = Math.floor(Math.random() * (containerWidth - width));
+    const x = Math.floor(Math.random() * (containerWidth - imageWidth));
 
     // Calculate a random margin top for the container
     const marginTop = Math.floor(Math.random() * 120) - 40;
-
-    // Set the size and position of the image
-    image.style.width = `${width}px`;
-    image.style.height = `${height}px`;
 
     // Set the margin top of the container
     container.style.marginTop = `${marginTop}px`;
 
     // Set the left position of the wrapper
     wrapper.style.transform = `translateX(${x}px`;
-    wrapper.style.width = `${width}px`;
-  }, [containerRef, imageRef, wrapperRef]);
+    wrapper.style.width = `${imageWidth}px`;
+  }, [containerRef, imageRef, wrapperRef, imageWidth]);
+
+  console.log({ imageWidth, imageHeight });
 
   return (
     <div className="two-col relative">
@@ -73,13 +59,14 @@ export const PhysicsImageRow = ({
           href={href}
           className="group inline-flex flex-col hover:underline"
           ref={wrapperRef}
+          style={{ width: imageWidth }}
         >
           <Image
             ref={imageRef}
             src={imageUrl}
             alt=""
-            height="0"
-            width="0"
+            height={imageHeight}
+            width={imageWidth}
             sizes="100vw"
           />
 
