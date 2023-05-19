@@ -4,7 +4,7 @@ import { metadata } from "next-sanity/studio/metadata";
 
 import config from "../../../sanity.config";
 
-const Studio = () => {
+const Cms = () => {
   return (
     <>
       <Head>
@@ -17,4 +17,4 @@ const Studio = () => {
   );
 };
 
-export default Studio;
+export default Cms;
