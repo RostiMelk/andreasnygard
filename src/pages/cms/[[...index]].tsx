@@ -1,5 +1,4 @@
 import Head from "next/head";
-import type { GetStaticProps } from "next";
 import { NextStudio } from "next-sanity/studio";
 import { metadata } from "next-sanity/studio/metadata";
 
