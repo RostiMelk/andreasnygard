@@ -69,9 +69,9 @@ const Home = ({ work }: HomeProps) => {
       { isStatic: true, label: "rightWall" }
     );
 
-    const mouseConstraint = Matter.MouseConstraint.create(engine, {
-      element: containerRef.current,
-    });
+    // const mouseConstraint = Matter.MouseConstraint.create(engine, {
+    //   element: containerRef.current,
+    // });
 
     Matter.Composite.add(engine.world, [
       ...images,
@@ -79,7 +79,7 @@ const Home = ({ work }: HomeProps) => {
       floor,
       leftWall,
       rightWall,
-      mouseConstraint,
+      // mouseConstraint,
     ]);
 
     (function rerender() {
