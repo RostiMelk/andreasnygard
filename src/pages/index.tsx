@@ -69,18 +69,12 @@ const Home = ({ work }: HomeProps) => {
       { isStatic: true, label: "rightWall" }
     );
 
-    const mouseConstraint = Matter.MouseConstraint.create(engine, {
-      // @ts-ignore
-      element: containerRef.current,
-    });
-
     Matter.Composite.add(engine.world, [
       ...images,
       roof,
       floor,
       leftWall,
       rightWall,
-      mouseConstraint,
     ]);
 
     (function rerender() {
