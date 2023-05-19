@@ -14,7 +14,7 @@ const config = {
   projectId: projectId,
   dataset: dataset,
   useCdn: true,
-  apiVersion: "2021-10-21",
+  apiVersion: "2023-03-04",
   studioUrl: "/cms",
 };
 
