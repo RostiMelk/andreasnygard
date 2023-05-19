@@ -8,7 +8,7 @@ await import("./src/env.mjs");
 const config = {
   reactStrictMode: true,
   images: {
-    domains: ["cdn.sanity.io", "picsum.photos"],
+    domains: ["cdn.sanity.io"],
   },
 
   /**
