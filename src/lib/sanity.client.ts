@@ -15,7 +15,7 @@ const config = {
   dataset: dataset,
   useCdn: true,
   apiVersion: "2021-10-21",
-  studioUrl: "/studio",
+  studioUrl: "/cms",
 };
 
 export const client: SanityClient = createClient(config);
