@@ -70,6 +70,7 @@ const Home = ({ work }: HomeProps) => {
     );
 
     const mouseConstraint = Matter.MouseConstraint.create(engine, {
+      // @ts-ignore
       element: containerRef.current,
     });
 
