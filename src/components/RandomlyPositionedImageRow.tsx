@@ -26,23 +26,7 @@ export const RandomlyPositionedImageRow = forwardRef(
     const wrapperRef = useRef<HTMLAnchorElement>(null);
     const imageRef = useRef<HTMLImageElement>(null);
 
-    // merge refs
     useImperativeHandle(ref, () => wrapperRef.current);
-
-    // useEffect(() => {
-    //   const container = containerRef.current;
-    //   const image = imageRef.current;
-    //   const wrapper = wrapperRef.current;
-    //   if (!container || !image || !wrapper) return;
-
-    //   const containerWidth = container.offsetWidth;
-    //   const x = Math.floor(Math.random() * (containerWidth - imageWidth));
-    //   const marginTop = Math.floor(Math.random() * 120) - 40;
-
-    //   container.style.marginTop = `${marginTop}px`;
-    //   wrapper.style.transform = `translateX(${x}px`;
-    //   wrapper.style.width = `${imageWidth}px`;
-    // }, [containerRef, imageRef, wrapperRef, imageWidth, imageHeight]);
 
     return (
       <div className="two-col relative">
@@ -54,12 +38,12 @@ export const RandomlyPositionedImageRow = forwardRef(
             href={href}
             className="group pointer-events-auto inline-flex flex-col hover:underline"
             ref={wrapperRef}
-            style={{ width: imageWidth }}
           >
             <Image
               ref={imageRef}
               src={imageUrl}
               alt=""
+              quality={80}
               height={imageHeight}
               width={imageWidth}
               sizes="100vw"
