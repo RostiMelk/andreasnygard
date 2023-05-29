@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 
 import type { HomeProps } from "./types";
 import { client, groq, urlFor } from "@/lib/sanity.client";
-import { Layout, RandomlyPositionedImageRow } from "@/components";
+import { Layout } from "@/components";
 import Matter from "matter-js";
 
 const Home = ({ work }: HomeProps) => {
