@@ -52,7 +52,7 @@ export const RandomlyPositionedImageRow = forwardRef(
         >
           <Link
             href={href}
-            className="blend-invert group pointer-events-auto inline-flex flex-col hover:underline"
+            className="group pointer-events-auto inline-flex flex-col hover:underline"
             ref={wrapperRef}
             style={{ width: imageWidth }}
           >
@@ -63,6 +63,7 @@ export const RandomlyPositionedImageRow = forwardRef(
               height={imageHeight}
               width={imageWidth}
               sizes="100vw"
+              className="max-h-[400px] max-w-[400px] object-cover grayscale group-hover:grayscale-0"
             />
             <h4 className="invisible mt-4 text-base group-hover:visible">
               {title}
