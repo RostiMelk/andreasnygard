@@ -38,13 +38,8 @@ const Home = ({ work }: HomeProps) => {
 
       const rand = (window.innerWidth - width) * Math.random();
       // const x = i % 2 === 0 ? rand : window.innerWidth - rand;
-      const x = 0;
-
-      // Calculate each row by image height + all previous rows
-      const y = imageRefs.current.reduce(
-        (acc, curr, i) => acc + (i < row ? curr.clientHeight : 0),
-        0
-      );
+      const x = rand;
+      const y = 500 * i;
 
       return {
         body: Matter.Bodies.rectangle(x, y, width, height, {
@@ -53,11 +48,9 @@ const Home = ({ work }: HomeProps) => {
         elem: el as HTMLElement,
         render() {
           const { x, y } = this.body.position;
-          // this.elem.style.top = `${y - height / 2}px`;
-          // this.elem.style.left = `${x - width / 2}px`;
           this.elem.style.transform = `translate(${x - width / 2}px, ${
             y - height / 2
-          }px)`;
+          }px) rotate(${this.body.angle}rad)`;
         },
       };
     });
@@ -105,8 +98,20 @@ const Home = ({ work }: HomeProps) => {
   }, []);
 
   return (
-    <Layout>
-      <section className="container mb-32 h-full min-h-screen w-full">
+    <Layout
+      headerContinuation={
+        <>
+          is a graphic designer, based in Oslo, Norway.He believes good design
+          (whatever that means) can be a force for change, and bring people
+          closer to each other.Andreas currently works as a designer at{" "}
+          <a href="https://stem.no" target="_blank" className="external-link">
+            Stem Agency
+          </a>
+          .
+        </>
+      }
+    >
+      <section className="container z-20 mb-32 h-full min-h-screen w-full">
         {work.map(({ _id, title, slug, mainImage }, index) => {
           return (
             <div

@@ -43,7 +43,7 @@ export const Header = ({ navItems, titleContinuation }: Props) => {
       </header>
 
       {titleContinuation && (
-        <p className="container m-0 mt-7 w-1/2 text-lg">
+        <p className="container absolute m-0 mt-7 w-1/2 text-lg">
           <span className="invisible">{title}</span> {titleContinuation}
         </p>
       )}

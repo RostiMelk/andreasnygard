@@ -9,7 +9,7 @@ export default {
       },
       fontSize: {
         base: ["1.5rem", "1.4"],
-        lg: ["3rem", "1.4"],
+        lg: ["2.5rem", "1.3"],
       },
       fontWeight: {
         normal: "500",
