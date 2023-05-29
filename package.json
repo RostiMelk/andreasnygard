@@ -11,8 +11,6 @@
   "dependencies": {
     "@next/font": "^13.3.1",
     "@portabletext/react": "^3.0.0",
-    "@react-three/cannon": "^6.5.2",
-    "@react-three/fiber": "^8.13.0",
     "@sanity/client": "^6.1.1",
     "@sanity/icons": "^2.3.1",
     "@sanity/image-url": "^1.0.2",
