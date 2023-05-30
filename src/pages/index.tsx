@@ -15,6 +15,10 @@ const Home = ({ work }: HomeProps) => {
 
   const router = useRouter();
 
+  const clickThreshold = 5;
+  let startX = 0;
+  let startY = 0;
+
   const animate = () => {
     engineRef.current = Matter.Engine.create();
     const engine: Matter.Engine = engineRef.current;
@@ -30,21 +34,31 @@ const Home = ({ work }: HomeProps) => {
       const width = el?.querySelector("img")?.clientWidth ?? 0;
       const height = el?.querySelector("img")?.clientHeight ?? 0;
 
-      console.log({ width, height });
+      const gutter = 20;
+      const halfWin = window.innerWidth / 2;
+      const randX = Math.random() * (halfWin - width);
+      const x = i % 2 === 0 ? randX + halfWin - gutter : randX + gutter;
 
-      const row = Math.floor(i); // Calculate the row number
+      const y = imageRefs.current
+        .slice(0, i)
+        .reduce(
+          (acc, el) => acc + Number(el?.querySelector("img")?.clientHeight),
+          200
+        );
 
-      console.log({ row });
-
-      const rand = (window.innerWidth - width) * Math.random();
-      // const x = i % 2 === 0 ? rand : window.innerWidth - rand;
-      const x = rand;
-      const y = 500 * i;
+      console.log({ x, y });
 
       return {
-        body: Matter.Bodies.rectangle(x, y, width, height, {
-          // frictionAir: 0.1, // Adjust this value to increase linear damping
-        }),
+        body: Matter.Bodies.rectangle(
+          x + height / 2,
+          y + width / 2,
+          width,
+          height,
+          {
+            // frictionAir: 0.1, // Adjust this value to increase linear damping
+            collisionFilter: { category: 0b10 },
+          }
+        ),
         elem: el as HTMLElement,
         render() {
           const { x, y } = this.body.position;
@@ -90,12 +104,32 @@ const Home = ({ work }: HomeProps) => {
 
   useEffect(() => {
     animate();
+    document.body.style.height = `${document.body.scrollHeight}px`;
 
     return () => {
       if (requestRef.current) cancelAnimationFrame(requestRef.current);
       if (engineRef.current) Matter.Engine.clear(engineRef.current);
     };
   }, []);
+
+  const handleImageMouseDown = (event: React.MouseEvent<HTMLDivElement>) => {
+    startX = event.clientX;
+    startY = event.clientY;
+  };
+
+  const handleImageMouseUp = (
+    event: React.MouseEvent<HTMLDivElement>,
+    slug: string
+  ) => {
+    const endX = event.clientX;
+    const endY = event.clientY;
+    const deltaX = Math.abs(endX - startX);
+    const deltaY = Math.abs(endY - startY);
+
+    if (deltaX <= clickThreshold && deltaY <= clickThreshold) {
+      void router.push(`/work/${slug}`);
+    }
+  };
 
   return (
     <Layout
@@ -113,23 +147,26 @@ const Home = ({ work }: HomeProps) => {
     >
       <section className="container z-20 mb-32 h-full min-h-screen w-full">
         {work.map(({ _id, title, slug, mainImage }, index) => {
+          console.log(urlFor(mainImage).width(20).url());
           return (
             <div
-              // onClick={() => {
-              //   router.push(`/work/${slug.current}`);
-              // }}
+              onMouseDown={handleImageMouseDown}
+              onMouseUp={(event) => handleImageMouseUp(event, slug.current)}
+              onTouchEnd={() => router.push(`/work/${slug.current}`)}
               key={_id}
-              className="group absolute inline-flex max-w-[300px] cursor-pointer flex-col will-change-transform hover:z-10 hover:underline"
+              className="blend-invert group absolute inline-flex max-w-[400px] cursor-pointer flex-col will-change-transform hover:z-10 hover:underline"
               ref={(el) => (imageRefs.current[index] = el)}
             >
               <Image
-                src={urlFor(mainImage)?.url() ?? ""}
                 alt=""
-                quality={80}
+                blurDataURL={urlFor(mainImage).width(30).url()}
+                className="pointer-events-none select-none object-cover grayscale group-hover:grayscale-0"
                 height={mainImage?.metadata?.dimensions?.height ?? 0}
-                width={mainImage?.metadata?.dimensions?.width ?? 0}
+                placeholder="blur"
+                quality={70}
                 sizes="100vw"
-                className="pointer-events-none max-h-[300px] max-w-[300px] select-none object-cover grayscale group-hover:grayscale-0"
+                src={urlFor(mainImage)?.url() ?? ""}
+                width={mainImage?.metadata?.dimensions?.width ?? 0}
               />
               <h4 className="invisible mt-4 text-base group-hover:visible">
                 {title}
