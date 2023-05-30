@@ -1,5 +1,12 @@
-import blockContent from './blockContent'
-import work from './work'
-import blog from './blog'
+import { blog, homePage, work } from "@/schemas/documents";
+import { wysiwyg, imageRow } from "@/schemas/objects";
 
-export const schemaTypes = [work, blog, blockContent]
+export const schemaTypes = [
+  // Documents
+  blog,
+  //   homePage,
+  work,
+  // Objects
+  wysiwyg,
+  imageRow,
+];

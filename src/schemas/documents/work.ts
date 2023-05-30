@@ -84,43 +84,11 @@ export default defineType({
         },
       ],
     }),
-    // defineField({
-    //   name: "body",
-    //   title: "Body",
-    //   type: "blockContent",
-    // }),
     defineField({
-      name: "imageRows",
-      title: "Image rows",
+      name: "content",
+      title: "Content",
       type: "array",
-      of: [
-        {
-          type: "object",
-          fields: [
-            {
-              name: "imageRow",
-              title: "Image row",
-              type: "array",
-              of: [{ type: "image" }],
-              description: "Max 4 images per row",
-              validation: (Rule) => Rule.max(4),
-              options: { layout: "grid" },
-            },
-          ],
-          preview: {
-            select: {
-              images: "imageRow",
-            },
-            prepare({ images }: { images?: string[] }) {
-              const count = images ? images.length : 0;
-              return {
-                title: `${count} image${count === 1 ? "" : "s"}`,
-                media: images && images.length > 0 ? images[0] : null,
-              };
-            },
-          },
-        },
-      ],
+      of: [{ type: "imageRow" }, { type: "wysiwyg" }],
     }),
   ],
 

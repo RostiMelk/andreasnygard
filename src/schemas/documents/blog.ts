@@ -34,9 +34,9 @@ export default defineType({
       type: "datetime",
     }),
     defineField({
-      name: "body",
-      title: "Body",
-      type: "blockContent",
+      name: "content",
+      title: "Content",
+      type: "wysiwyg",
     }),
   ],
 
