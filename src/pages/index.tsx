@@ -46,8 +46,6 @@ const Home = ({ work }: HomeProps) => {
           200
         );
 
-      console.log({ x, y });
-
       return {
         body: Matter.Bodies.rectangle(
           x + height / 2,
@@ -147,12 +145,11 @@ const Home = ({ work }: HomeProps) => {
     >
       <section className="container z-20 mb-32 h-full min-h-screen w-full">
         {work.map(({ _id, title, slug, mainImage }, index) => {
-          console.log(urlFor(mainImage).width(20).url());
           return (
             <div
               onMouseDown={handleImageMouseDown}
               onMouseUp={(event) => handleImageMouseUp(event, slug.current)}
-              onTouchEnd={() => router.push(`/work/${slug.current}`)}
+              onTouchEnd={() => void router.push(`/work/${slug.current}`)}
               key={_id}
               className="blend-invert group absolute inline-flex max-w-[400px] cursor-pointer flex-col will-change-transform hover:z-10 hover:underline"
               ref={(el) => (imageRefs.current[index] = el)}

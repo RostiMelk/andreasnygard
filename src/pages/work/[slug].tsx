@@ -1,14 +1,11 @@
 import type { GetStaticPaths, GetStaticProps } from "next";
-import Image from "next/image";
 
 import type { WorkProps } from "./types";
-import { client, groq, urlFor } from "@/lib/sanity.client";
-import { Layout } from "@/components";
+import { client, groq } from "@/lib/sanity.client";
+import { Layout, ContentBlocks } from "@/components";
 
 const Work = ({ work }: WorkProps) => {
-  const { title, meta, imageRows } = work ?? {};
-
-  console.log(work);
+  const { title, meta, content } = work ?? {};
 
   return (
     <Layout>
@@ -17,6 +14,7 @@ const Work = ({ work }: WorkProps) => {
           <div className="two-col mb-20">
             {title && <h1 className="text-lg">{title}</h1>}
           </div>
+
           <div className="grid grid-cols-5 gap-4">
             {meta?.map(({ title, description, link }, index) => (
               <div key={index}>
@@ -35,23 +33,11 @@ const Work = ({ work }: WorkProps) => {
           </div>
         </section>
 
-        <section>
-          {imageRows?.map(({ imageRow, _key }) => (
-            <div key={_key} className="mb-24 flex gap-8">
-              {imageRow?.map(({ asset, _key }) => (
-                <Image
-                  key={_key}
-                  src={urlFor(asset)?.url() ?? ""}
-                  width={asset?.metadata?.dimensions?.width ?? 0}
-                  height={asset?.metadata?.dimensions?.height ?? 0}
-                  alt={""} // TODO: Add alt text
-                  className="h-full flex-1"
-                  quality={90}
-                />
-              ))}
-            </div>
+        <article>
+          {content?.map((block) => (
+            <ContentBlocks key={block._key} block={block} />
           ))}
-        </section>
+        </article>
       </main>
     </Layout>
   );
@@ -74,7 +60,7 @@ export const getStaticProps: GetStaticProps<WorkProps> = async (context) => {
     groq`
       *[_type == "work" && slug.current == $slug][0] {
         ...,
-        "imageRows": imageRows[] {
+        "content": content[]{
           ...,
           "imageRow": imageRow[] {
             ...,
