@@ -14,9 +14,6 @@ export default async function revalidate(
       process.env.SANITY_REVALIDATE_SECRET
     );
 
-    console.log("body", body);
-    console.log("isValidSignature", isValidSignature);
-
     const slug = body.slug as { current: string };
     if (!slug) {
       const message = "No slug provided";
@@ -32,13 +29,12 @@ export default async function revalidate(
       return;
     }
 
-    const staleRoute = `/${slug.current}`;
+    const staleRoute = `${body._type}/${slug.current}`;
     await res.revalidate(staleRoute);
     const message = `Updated route: ${staleRoute}`;
     console.log(message);
     return res.status(200).json({ message });
   } catch (err) {
-    console.error(err);
     return res.status(500).json({ message: "Internal server error" });
   }
 }

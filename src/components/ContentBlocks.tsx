@@ -4,7 +4,7 @@ import { Wysiwyg, ImageRow } from "@/components";
 interface Props {
   block: {
     _type: string;
-    [key: string]: any;
+    [key: string]: unknown;
   };
 }
 
