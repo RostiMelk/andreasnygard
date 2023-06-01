@@ -1,21 +1,21 @@
 import Head from "next/head";
 import React from "react";
+import clsx from "clsx";
 
 import { Header, Footer } from "@/components";
 
 interface Props {
-  children: React.ReactNode;
+  className?: string;
+  children?: React.ReactNode;
   title?: string;
   description?: string;
   headerContinuation?: React.ReactNode;
 }
 
-export const Layout = ({
-  title,
-  description,
-  children,
-  headerContinuation,
-}: Props): JSX.Element => {
+export const Layout = React.forwardRef<HTMLDivElement, Props>(function Layout(
+  { title, description, className, children, headerContinuation }: Props,
+  ref: React.Ref<HTMLDivElement>
+) {
   /**
    * Meta tags:
    */
@@ -75,9 +75,14 @@ export const Layout = ({
         ]}
       />
 
-      {children}
+      <main
+        className={clsx("container min-h-screen w-screen", className)}
+        ref={ref}
+      >
+        {children}
+      </main>
 
       <Footer />
     </>
   );
-};
+});

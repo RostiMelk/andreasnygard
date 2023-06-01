@@ -9,9 +9,10 @@ import { Layout } from "@/components";
 import Matter from "matter-js";
 
 const Home = ({ work }: HomeProps) => {
-  const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const imageWrapperRefs = useRef<(HTMLAnchorElement | null)[]>([]);
   const requestRef = useRef<number>();
   const engineRef = useRef<Matter.Engine>();
+  const mainRef = useRef<HTMLDivElement>(null);
 
   const router = useRouter();
 
@@ -30,7 +31,7 @@ const Home = ({ work }: HomeProps) => {
       body: Matter.Body;
       elem: HTMLElement;
       render: () => void;
-    }[] = imageRefs.current.map((el, i) => {
+    }[] = imageWrapperRefs.current.map((el, i) => {
       const width = el?.querySelector("img")?.clientWidth ?? 0;
       const height = el?.querySelector("img")?.clientHeight ?? 0;
 
@@ -39,7 +40,7 @@ const Home = ({ work }: HomeProps) => {
       const randX = Math.random() * (halfWin - width);
       const x = i % 2 === 0 ? randX + halfWin - gutter : randX + gutter;
 
-      const y = imageRefs.current
+      const y = imageWrapperRefs.current
         .slice(0, i)
         .reduce(
           (acc, el) => acc + Number(el?.querySelector("img")?.clientHeight),
@@ -98,11 +99,19 @@ const Home = ({ work }: HomeProps) => {
     };
 
     rerender();
+
+    if (mainRef.current) {
+      const height = images.reduce(
+        (acc, el) => acc + el.elem.clientHeight,
+        200
+      );
+
+      mainRef.current.style.height = `${height}px`;
+    }
   };
 
   useEffect(() => {
     animate();
-    document.body.style.height = `${document.body.scrollHeight}px`;
 
     return () => {
       if (requestRef.current) cancelAnimationFrame(requestRef.current);
@@ -110,15 +119,17 @@ const Home = ({ work }: HomeProps) => {
     };
   }, []);
 
-  const handleImageMouseDown = (event: React.MouseEvent<HTMLDivElement>) => {
+  const handleImageMouseDown = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
     startX = event.clientX;
     startY = event.clientY;
   };
 
   const handleImageMouseUp = (
-    event: React.MouseEvent<HTMLDivElement>,
+    event: React.MouseEvent<HTMLAnchorElement>,
     slug: string
   ) => {
+    event.preventDefault();
     const endX = event.clientX;
     const endY = event.clientY;
     const deltaX = Math.abs(endX - startX);
@@ -142,36 +153,36 @@ const Home = ({ work }: HomeProps) => {
           .
         </>
       }
+      className="z-20"
+      ref={mainRef}
     >
-      <section className="container z-20 mb-32 h-full min-h-screen w-full">
-        {work.map(({ _id, title, slug, mainImage }, index) => {
-          return (
-            <div
-              onMouseDown={handleImageMouseDown}
-              onMouseUp={(event) => handleImageMouseUp(event, slug.current)}
-              onTouchEnd={() => void router.push(`/work/${slug.current}`)}
-              key={_id}
-              className="blend-invert group absolute inline-flex max-w-[400px] cursor-pointer flex-col will-change-transform hover:z-10 hover:underline"
-              ref={(el) => (imageRefs.current[index] = el)}
-            >
-              <Image
-                alt=""
-                blurDataURL={urlFor(mainImage).width(30).url()}
-                className="pointer-events-none select-none object-cover grayscale group-hover:grayscale-0"
-                height={mainImage?.metadata?.dimensions?.height ?? 0}
-                placeholder="blur"
-                quality={70}
-                sizes="100vw"
-                src={urlFor(mainImage)?.url() ?? ""}
-                width={mainImage?.metadata?.dimensions?.width ?? 0}
-              />
-              <h4 className="invisible mt-4 text-base group-hover:visible">
-                {title}
-              </h4>
-            </div>
-          );
-        })}
-      </section>
+      {work.map(({ _id, title, slug, mainImage }, index) => {
+        return (
+          <a
+            onMouseDown={handleImageMouseDown}
+            onMouseUp={(event) => handleImageMouseUp(event, slug.current)}
+            onTouchEnd={() => void router.push(`/work/${slug.current}`)}
+            key={_id}
+            className="blend-invert group absolute inline-flex max-w-[400px] cursor-pointer flex-col will-change-transform hover:z-10 hover:underline"
+            ref={(el) => (imageWrapperRefs.current[index] = el)}
+          >
+            <Image
+              alt=""
+              blurDataURL={urlFor(mainImage).width(30).url()}
+              className="pointer-events-none select-none object-cover grayscale group-hover:grayscale-0"
+              height={mainImage?.metadata?.dimensions?.height ?? 0}
+              placeholder="blur"
+              quality={70}
+              sizes="100vw"
+              src={urlFor(mainImage)?.url() ?? ""}
+              width={mainImage?.metadata?.dimensions?.width ?? 0}
+            />
+            <h4 className="invisible mt-4 text-base group-hover:visible">
+              {title}
+            </h4>
+          </a>
+        );
+      })}
     </Layout>
   );
 };

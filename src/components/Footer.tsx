@@ -8,6 +8,7 @@ const strPad = (value: number) => {
 export const Footer = () => {
   const [currentHour, setCurrentHour] = useState(new Date().getHours());
   const [currentMinute, setCurrentMinute] = useState(new Date().getMinutes());
+  const currentYear = new Date().getFullYear();
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -23,14 +24,16 @@ export const Footer = () => {
   }, []);
 
   return (
-    <footer
-      className={clsx("blend-invert container fixed bottom-0 left-0 pb-7")}
-    >
-      <span className="text-lg">
+    <footer className="relative">
+      <p className="container fixed bottom-7 left-0 text-lg">
         {strPad(currentHour)}
         <span className="animate-blink">:</span>
         {strPad(currentMinute)} OSL, NOR
-      </span>
+      </p>
+
+      <p className="container absolute bottom-7 text-right text-base">
+        Copyright ©{currentYear} Andreas Nygård, All rights reserved
+      </p>
     </footer>
   );
 };
