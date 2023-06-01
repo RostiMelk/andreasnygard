@@ -2,7 +2,7 @@ import type { GetStaticPaths, GetStaticProps } from "next";
 
 import { Layout } from "@/components";
 
-const About = () => {
+const Contact = () => {
   return (
     <Layout
       headerContinuation={
@@ -24,4 +24,4 @@ const About = () => {
   );
 };
 
-export default About;
+export default Contact;
