@@ -77,8 +77,8 @@ const Home = ({ work }: HomeProps) => {
     const wallOp = {
       isStatic: true,
     };
-    const iw = window.innerWidth;
-    const ih = document.body.scrollHeight;
+    const iw = mainRef.current?.clientWidth ?? 0;
+    const ih = mainRef.current?.clientHeight ?? 0;
     const walls = [
       Matter.Bodies.rectangle(iw / 2, -offset, iw + 2 * offset, 50, wallOp),
       Matter.Bodies.rectangle(iw / 2, ih + offset, iw + 2 * offset, 50, wallOp),
@@ -151,6 +151,12 @@ const Home = ({ work }: HomeProps) => {
             Stem Agency
           </a>
           .
+          <br />
+          <br />
+          While he cites brand identity, strategy, illustration and copywriting
+          as some of his greatest professional strengths, he is chronically
+          curious and is always on the search for new typologies, methods and
+          contexts to work within.
         </>
       }
       className="z-20"
