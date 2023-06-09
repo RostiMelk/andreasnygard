@@ -8,7 +8,7 @@ export default {
         sans: ["var(--font-stk-bureau)", "sans-serif"],
       },
       fontSize: {
-        base: ["1.5rem", "1.3"],
+        base: ["1rem", "1.3"],
         // lg: ["2.5rem", "1.3"],
       },
       fontWeight: {
