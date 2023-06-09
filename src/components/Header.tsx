@@ -19,7 +19,7 @@ export const Header = ({ navItems, titleContinuation }: Props) => {
   return (
     <>
       <header className="two-col blend-invert container fixed top-7 z-10">
-        <h1 className="text-lg">
+        <h1 className="text-base">
           <Link className="hover:underline" href="/">
             {title}
           </Link>
@@ -30,7 +30,7 @@ export const Header = ({ navItems, titleContinuation }: Props) => {
             {navItems?.map((item, i) => (
               <li key={i}>
                 <Link
-                  className="text-lg hover:underline"
+                  className="text-base hover:underline"
                   href={item.url}
                   target={item.newTab ? "_blank" : undefined}
                 >
@@ -43,7 +43,7 @@ export const Header = ({ navItems, titleContinuation }: Props) => {
       </header>
 
       {titleContinuation && (
-        <p className="container absolute m-0 mt-7 w-1/2 text-lg">
+        <p className="container absolute m-0 mt-7 w-1/2 text-base">
           <span className="invisible">{title}</span> {titleContinuation}
         </p>
       )}

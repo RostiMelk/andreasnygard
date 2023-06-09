@@ -4,7 +4,7 @@ import { PortableText } from "@portabletext/react";
 const components = {
   block: {
     normal: (props: any) => <p {...props} className="mb-4 text-base" />,
-    h1: (props: any) => <h1 {...props} className="mb-4 text-lg" />,
+    h1: (props: any) => <h1 {...props} className="mb-4 text-base" />,
   },
   list: {
     bullet: (props: any) => (

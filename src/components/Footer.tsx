@@ -25,7 +25,7 @@ export const Footer = () => {
 
   return (
     <footer className="relative">
-      <p className="container fixed bottom-7 left-0 text-lg">
+      <p className="container fixed bottom-7 left-0 text-base">
         {strPad(currentHour)}
         <span className="animate-blink">:</span>
         {strPad(currentMinute)} OSL, NOR

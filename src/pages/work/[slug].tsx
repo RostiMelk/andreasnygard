@@ -12,7 +12,7 @@ const Work = ({ work }: WorkProps) => {
       <main className="container my-44">
         <section className="mb-48">
           <div className="two-col mb-20">
-            {title && <h1 className="text-lg">{title}</h1>}
+            {title && <h1 className="text-base">{title}</h1>}
           </div>
 
           <div className="grid grid-cols-5 gap-4">
