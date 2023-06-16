@@ -1,10 +1,11 @@
 import React from "react";
 import { PortableText } from "@portabletext/react";
-
+import clsx from "clsx";
 const components = {
   block: {
-    normal: (props: any) => <p {...props} className="mb-4 text-base" />,
-    h1: (props: any) => <h1 {...props} className="mb-4 text-base" />,
+    normal: (props: any) => (
+      <p {...props} className="ml-auto indent-7 text-base lg:w-1/2" />
+    ),
   },
   list: {
     bullet: (props: any) => (

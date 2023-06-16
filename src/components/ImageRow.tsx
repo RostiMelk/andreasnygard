@@ -15,7 +15,7 @@ interface Props {
 
 export const ImageRow = ({ className, imageRow }: Props) => {
   return (
-    <section className={clsx("mb-24 flex gap-8", className)}>
+    <section className={clsx("mb-8 flex gap-8", className)}>
       {imageRow?.map(({ asset, _key }) => (
         <div key={_key} className="flex-1">
           <Image
@@ -26,7 +26,7 @@ export const ImageRow = ({ className, imageRow }: Props) => {
             height={asset?.metadata?.dimensions?.height ?? 0}
             alt={""} // TODO: Add alt text
             className="h-auto"
-            quality={90}
+            quality={70}
           />
         </div>
       ))}

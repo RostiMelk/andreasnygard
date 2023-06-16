@@ -5,38 +5,41 @@ import { client, groq } from "@/lib/sanity.client";
 import { Layout, ContentBlocks } from "@/components";
 
 const Work = ({ work }: WorkProps) => {
-  const { title, meta, content } = work ?? {};
+  const { title, content } = work ?? {};
 
   return (
     <Layout>
       <main className="container my-44">
-        <section className="mb-48">
-          <div className="two-col mb-20">
-            {title && <h1 className="text-base">{title}</h1>}
-          </div>
-
-          <div className="grid grid-cols-5 gap-4">
-            {meta?.map(({ title, description, link }, index) => (
-              <div key={index}>
-                <h4 className="text-base">{title || "ㅤ"}</h4>
-                <p className="text-base">
-                  {typeof link === "string" ? (
-                    <a href={link} className="external-link">
-                      {description}
-                    </a>
-                  ) : (
-                    description
-                  )}
-                </p>
-              </div>
-            ))}
-          </div>
+        <section className="mb-24">
+          {title && <h1 className="text-base">{title}</h1>}
         </section>
 
         <article>
-          {content?.map((block) => (
-            <ContentBlocks key={block._key} block={block} />
-          ))}
+          {content?.map((block, i) => {
+            if (block._type === "wysiwyg") {
+              // Find the index of the next non-"wysiwyg" block
+              const endIndex = content
+                .slice(i + 1)
+                .findIndex((nextBlock) => nextBlock._type !== "wysiwyg");
+              const sectionContent =
+                endIndex === -1
+                  ? content.slice(i)
+                  : content.slice(i, i + endIndex + 1);
+
+              return (
+                <section key={block._key} className="my-24">
+                  {sectionContent.map((sectionBlock) => (
+                    <ContentBlocks
+                      key={sectionBlock._key}
+                      block={sectionBlock}
+                    />
+                  ))}
+                </section>
+              );
+            }
+
+            return <ContentBlocks key={block._key} block={block} />;
+          })}
         </article>
       </main>
     </Layout>

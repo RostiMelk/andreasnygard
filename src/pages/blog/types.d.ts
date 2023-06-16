@@ -6,9 +6,10 @@ export interface Meta {
   link?: string;
 }
 
-export interface WorkProps {
-  work: SanityDocument & {
+export interface BlogProps {
+  blog: SanityDocument & {
     title?: string;
+    meta?: Meta[];
     content?: {
       _key: string;
       _type: string;
