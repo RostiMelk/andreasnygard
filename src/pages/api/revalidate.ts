@@ -9,7 +9,6 @@ export default async function revalidate(
   res: NextApiResponse
 ) {
   try {
-    console.log("Revalidating route");
     const { isValidSignature, body } = await parseBody(
       req,
       process.env.SANITY_REVALIDATE_SECRET
@@ -30,10 +29,9 @@ export default async function revalidate(
       return;
     }
 
-    const staleRoute = `${body._type}/${slug.current}`;
+    const staleRoute = `/${body._type}/${slug.current}`;
     await res.revalidate(staleRoute);
     const message = `Updated route: ${staleRoute}`;
-    console.log(message);
     return res.status(200).json({ message });
   } catch (err) {
     console.error(err);
