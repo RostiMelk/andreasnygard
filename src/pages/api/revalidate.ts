@@ -9,6 +9,7 @@ export default async function revalidate(
   res: NextApiResponse
 ) {
   try {
+    console.log("Revalidating route");
     const { isValidSignature, body } = await parseBody(
       req,
       process.env.SANITY_REVALIDATE_SECRET
@@ -35,6 +36,7 @@ export default async function revalidate(
     console.log(message);
     return res.status(200).json({ message });
   } catch (err) {
+    console.error(err);
     return res.status(500).json({ message: "Internal server error" });
   }
 }
