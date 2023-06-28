@@ -2,6 +2,7 @@ import { useRef, useEffect } from "react";
 import type { GetStaticProps } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { isMobile } from "react-device-detect";
 
 import type { HomeProps } from "./types";
 import { client, groq, urlFor } from "@/lib/sanity.client";
@@ -111,6 +112,7 @@ const Home = ({ work }: HomeProps) => {
   };
 
   useEffect(() => {
+    if (isMobile) return;
     animate();
 
     return () => {
@@ -164,16 +166,20 @@ const Home = ({ work }: HomeProps) => {
     >
       {work.map(
         ({ _id, title, shortTitle, slug, notClickable, mainImage }, index) => {
-          console.log({ title, notClickable });
           return (
             <a
               // href={notClickable ? undefined : `/work/${slug.current}`}
-              onMouseDown={(e) => !notClickable && handleMouseDown(e)}
-              onMouseUp={(e) => !notClickable && handleMouseUp(e, slug.current)}
+              onMouseDown={(e) =>
+                !notClickable && !isMobile && handleMouseDown(e)
+              }
+              onMouseUp={(e) =>
+                !notClickable && !isMobile && handleMouseUp(e, slug.current)
+              }
               onTouchEnd={() => void router.push(`/work/${slug.current}`)}
               key={_id}
-              className="blend-invert group absolute inline-flex max-w-[400px] cursor-pointer flex-col will-change-transform hover:z-10 hover:underline"
+              className="blend-invert group my-4 inline-flex w-full cursor-pointer flex-col will-change-transform hover:z-10 hover:underline lg:absolute lg:max-w-[400px]"
               ref={(el) => (imageWrapperRefs.current[index] = el)}
+              href={notClickable ? undefined : `/work/${slug.current}`}
             >
               <Image
                 alt=""
@@ -186,7 +192,7 @@ const Home = ({ work }: HomeProps) => {
                 src={urlFor(mainImage)?.url() ?? ""}
                 width={mainImage?.metadata?.dimensions?.width ?? 0}
               />
-              <h4 className="invisible mt-4 text-base group-hover:visible">
+              <h4 className="mt-4 text-base group-hover:visible lg:invisible">
                 {shortTitle ?? title}
               </h4>
             </a>

@@ -76,7 +76,7 @@ export const Layout = React.forwardRef<HTMLDivElement, Props>(function Layout(
       />
 
       <main
-        className={clsx("container min-h-screen w-screen", className)}
+        className={clsx("container my-20 min-h-screen w-screen", className)}
         ref={ref}
       >
         {children}
