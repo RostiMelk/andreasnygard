@@ -29,6 +29,14 @@ export default defineType({
       },
     }),
     defineField({
+      name: "notClickable",
+      title: "Not clickable",
+      type: "boolean",
+      description:
+        "If toggled, the work will not be clickable in the overview.",
+      initialValue: false,
+    }),
+    defineField({
       name: "mainImage",
       title: "Main image",
       type: "image",

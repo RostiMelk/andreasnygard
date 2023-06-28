@@ -36,7 +36,8 @@ export default defineType({
     defineField({
       name: "content",
       title: "Content",
-      type: "wysiwyg",
+      type: "array",
+      of: [{ type: "wysiwyg" }],
     }),
   ],
 

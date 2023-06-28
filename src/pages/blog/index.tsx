@@ -3,12 +3,12 @@ import type { GetStaticProps } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
-import type { HomeProps } from "./types";
+import type { BlogProps } from "./types";
 import { client, groq, urlFor } from "@/lib/sanity.client";
 import { Layout } from "@/components";
 import Matter from "matter-js";
 
-const Home = ({ work }: HomeProps) => {
+const Blog = ({ blog }: BlogProps) => {
   const imageWrapperRefs = useRef<(HTMLAnchorElement | null)[]>([]);
   const requestRef = useRef<number>();
   const engineRef = useRef<Matter.Engine>();
@@ -119,13 +119,13 @@ const Home = ({ work }: HomeProps) => {
     };
   }, []);
 
-  const handleMouseDown = (event: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleImageMouseDown = (event: React.MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
     startX = event.clientX;
     startY = event.clientY;
   };
 
-  const handleMouseUp = (
+  const handleImageMouseUp = (
     event: React.MouseEvent<HTMLAnchorElement>,
     slug: string
   ) => {
@@ -136,74 +136,48 @@ const Home = ({ work }: HomeProps) => {
     const deltaY = Math.abs(endY - startY);
 
     if (deltaX <= clickThreshold && deltaY <= clickThreshold) {
-      void router.push(`/work/${slug}`);
+      void router.push(`/blog/${slug}`);
     }
   };
 
   return (
-    <Layout
-      headerContinuation={
-        <>
-          is a graphic designer, based in Oslo, Norway.He believes good design
-          (whatever that means) can be a force for change, and bring people
-          closer to each other.Andreas currently works as a designer at{" "}
-          <a href="https://stem.no" target="_blank" className="external-link">
-            Stem Agency
+    <Layout className="z-20" ref={mainRef}>
+      {blog.map(({ _id, title, slug, mainImage }, index) => {
+        return (
+          <a
+            onMouseDown={handleImageMouseDown}
+            onMouseUp={(event) => handleImageMouseUp(event, slug.current)}
+            onTouchEnd={() => void router.push(`/blog/${slug.current}`)}
+            key={_id}
+            className="blend-invert group absolute inline-flex max-w-[400px] cursor-pointer flex-col will-change-transform hover:z-10 hover:underline"
+            ref={(el) => (imageWrapperRefs.current[index] = el)}
+          >
+            <Image
+              alt=""
+              blurDataURL={urlFor(mainImage).width(30).url()}
+              className="pointer-events-none select-none object-cover grayscale group-hover:grayscale-0"
+              height={mainImage?.metadata?.dimensions?.height ?? 0}
+              placeholder="blur"
+              quality={70}
+              sizes="100vw"
+              src={urlFor(mainImage)?.url() ?? ""}
+              width={mainImage?.metadata?.dimensions?.width ?? 0}
+            />
+            <h4 className="invisible mt-4 text-base group-hover:visible">
+              {title}
+            </h4>
           </a>
-          .
-          <br />
-          <br />
-          While he cites brand identity, strategy, illustration and copywriting
-          as some of his greatest professional strengths, he is chronically
-          curious and is always on the search for new typologies, methods and
-          contexts to work within.
-        </>
-      }
-      className="z-20"
-      ref={mainRef}
-    >
-      {work.map(
-        ({ _id, title, shortTitle, slug, notClickable, mainImage }, index) => {
-          console.log({ title, notClickable });
-          return (
-            <a
-              // href={notClickable ? undefined : `/work/${slug.current}`}
-              onMouseDown={(e) => !notClickable && handleMouseDown(e)}
-              onMouseUp={(e) => !notClickable && handleMouseUp(e, slug.current)}
-              onTouchEnd={() => void router.push(`/work/${slug.current}`)}
-              key={_id}
-              className="blend-invert group absolute inline-flex max-w-[400px] cursor-pointer flex-col will-change-transform hover:z-10 hover:underline"
-              ref={(el) => (imageWrapperRefs.current[index] = el)}
-            >
-              <Image
-                alt=""
-                blurDataURL={urlFor(mainImage).width(30).url()}
-                className="pointer-events-none select-none object-cover grayscale group-hover:grayscale-0"
-                height={mainImage?.metadata?.dimensions?.height ?? 0}
-                placeholder="blur"
-                quality={70}
-                sizes="100vw"
-                src={urlFor(mainImage)?.url() ?? ""}
-                width={mainImage?.metadata?.dimensions?.width ?? 0}
-              />
-              <h4 className="invisible mt-4 text-base group-hover:visible">
-                {shortTitle ?? title}
-              </h4>
-            </a>
-          );
-        }
-      )}
+        );
+      })}
     </Layout>
   );
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  const work: HomeProps["work"] = await client.fetch(groq`
-    *[_type == "work"] {
+  const blog: BlogProps["blog"] = await client.fetch(groq`
+    *[_type == "blog"] {
       _id,
       title,
-      shortTitle,
-      notClickable,
       slug,
       mainImage{
         ...asset->
@@ -213,9 +187,9 @@ export const getStaticProps: GetStaticProps = async () => {
 
   return {
     props: {
-      work,
+      blog,
     },
   };
 };
 
-export default Home;
+export default Blog;
