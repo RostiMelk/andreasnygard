@@ -9,35 +9,13 @@ const Work = ({ work }: WorkProps) => {
 
   return (
     <Layout>
-      <main className="container my-44">
+      <main className="my-44">
         <section className="mb-24">
           {title && <h1 className="text-base">{title}</h1>}
         </section>
 
         <article>
           {content?.map((block, i) => {
-            if (block._type === "wysiwyg") {
-              // Find the index of the next non-"wysiwyg" block
-              const endIndex = content
-                .slice(i + 1)
-                .findIndex((nextBlock) => nextBlock._type !== "wysiwyg");
-              const sectionContent =
-                endIndex === -1
-                  ? content.slice(i)
-                  : content.slice(i, i + endIndex + 1);
-
-              return (
-                <section key={block._key} className="my-24">
-                  {sectionContent.map((sectionBlock) => (
-                    <ContentBlocks
-                      key={sectionBlock._key}
-                      block={sectionBlock}
-                    />
-                  ))}
-                </section>
-              );
-            }
-
             return <ContentBlocks key={block._key} block={block} />;
           })}
         </article>
