@@ -43,9 +43,9 @@ export const Header = ({ navItems, titleContinuation }: Props) => {
       </header>
 
       {titleContinuation && (
-        <p className="container absolute m-0 mt-7 w-1/2 text-base">
+        <span className="container absolute m-0 mt-7 w-1/2 text-base [&>:nth-child(2)]:inline [&>:nth-child(n+3)]:indent-7">
           <span className="invisible">{title}</span> {titleContinuation}
-        </p>
+        </span>
       )}
     </>
   );

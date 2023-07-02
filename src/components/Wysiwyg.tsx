@@ -1,6 +1,6 @@
 import React from "react";
 import { PortableText } from "@portabletext/react";
-import clsx from "clsx";
+
 const components = {
   block: {
     normal: (props: any) => (
@@ -18,6 +18,5 @@ const components = {
 };
 
 export const Wysiwyg = (props: any) => {
-  console.log(props);
   return <PortableText {...props} components={components} />;
 };

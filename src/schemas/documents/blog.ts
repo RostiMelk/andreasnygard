@@ -7,44 +7,29 @@ export default defineType({
   fields: [
     defineField({
       name: "title",
+      description: "Not used anywhere, just for keeping track of documents",
       title: "Title",
       type: "string",
     }),
     defineField({
-      name: "slug",
-      title: "Slug",
-      type: "slug",
-      options: {
-        source: "title",
-        maxLength: 96,
-      },
-    }),
-    defineField({
-      name: "mainImage",
-      title: "Main image",
+      name: "image",
+      title: "Image",
       type: "image",
       options: {
         hotspot: true,
       },
     }),
-
     defineField({
       name: "publishedAt",
       title: "Published at",
       type: "datetime",
-    }),
-    defineField({
-      name: "content",
-      title: "Content",
-      type: "array",
-      of: [{ type: "wysiwyg" }],
     }),
   ],
 
   preview: {
     select: {
       title: "title",
-      media: "mainImage",
+      media: "image",
     },
     prepare(selection) {
       return { ...selection };

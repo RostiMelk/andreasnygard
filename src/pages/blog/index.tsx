@@ -1,7 +1,7 @@
 import { useRef, useEffect } from "react";
 import type { GetStaticProps } from "next";
 import Image from "next/image";
-import { useRouter } from "next/router";
+import { isMobile } from "react-device-detect";
 
 import type { BlogProps } from "./types";
 import { client, groq, urlFor } from "@/lib/sanity.client";
@@ -9,16 +9,10 @@ import { Layout } from "@/components";
 import Matter from "matter-js";
 
 const Blog = ({ blog }: BlogProps) => {
-  const imageWrapperRefs = useRef<(HTMLAnchorElement | null)[]>([]);
+  const imageWrapperRefs = useRef<(HTMLDivElement | null)[]>([]);
   const requestRef = useRef<number>();
   const engineRef = useRef<Matter.Engine>();
   const mainRef = useRef<HTMLDivElement>(null);
-
-  const router = useRouter();
-
-  const clickThreshold = 5;
-  let startX = 0;
-  let startY = 0;
 
   const animate = () => {
     engineRef.current = Matter.Engine.create();
@@ -111,62 +105,45 @@ const Blog = ({ blog }: BlogProps) => {
   };
 
   useEffect(() => {
+    if (isMobile) return;
     animate();
+
+    const handleResize = () => {
+      if (requestRef.current) cancelAnimationFrame(requestRef.current);
+      if (engineRef.current) Matter.Engine.clear(engineRef.current);
+      animate();
+    };
+
+    window.addEventListener("resize", handleResize);
 
     return () => {
       if (requestRef.current) cancelAnimationFrame(requestRef.current);
       if (engineRef.current) Matter.Engine.clear(engineRef.current);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
-  const handleImageMouseDown = (event: React.MouseEvent<HTMLAnchorElement>) => {
-    event.preventDefault();
-    startX = event.clientX;
-    startY = event.clientY;
-  };
-
-  const handleImageMouseUp = (
-    event: React.MouseEvent<HTMLAnchorElement>,
-    slug: string
-  ) => {
-    event.preventDefault();
-    const endX = event.clientX;
-    const endY = event.clientY;
-    const deltaX = Math.abs(endX - startX);
-    const deltaY = Math.abs(endY - startY);
-
-    if (deltaX <= clickThreshold && deltaY <= clickThreshold) {
-      void router.push(`/blog/${slug}`);
-    }
-  };
-
   return (
     <Layout className="z-20" ref={mainRef}>
-      {blog.map(({ _id, title, slug, mainImage }, index) => {
+      {blog.map(({ _id, image }, index) => {
         return (
-          <a
-            onMouseDown={handleImageMouseDown}
-            onMouseUp={(event) => handleImageMouseUp(event, slug.current)}
-            onTouchEnd={() => void router.push(`/blog/${slug.current}`)}
+          <div
             key={_id}
-            className="blend-invert group absolute inline-flex max-w-[400px] cursor-pointer flex-col will-change-transform hover:z-10 hover:underline"
+            className="absolute inline-flex max-w-[400px] cursor-pointer will-change-transform"
             ref={(el) => (imageWrapperRefs.current[index] = el)}
           >
             <Image
               alt=""
-              blurDataURL={urlFor(mainImage).width(30).url()}
-              className="pointer-events-none select-none object-cover grayscale group-hover:grayscale-0"
-              height={mainImage?.metadata?.dimensions?.height ?? 0}
+              blurDataURL={urlFor(image).width(30).url()}
+              className="pointer-events-none select-none object-cover"
+              height={image?.metadata?.dimensions?.height ?? 0}
               placeholder="blur"
-              quality={70}
+              quality={50}
               sizes="100vw"
-              src={urlFor(mainImage)?.url() ?? ""}
-              width={mainImage?.metadata?.dimensions?.width ?? 0}
+              src={urlFor(image)?.url() ?? ""}
+              width={image?.metadata?.dimensions?.width ?? 0}
             />
-            <h4 className="invisible mt-4 text-base group-hover:visible">
-              {title}
-            </h4>
-          </a>
+          </div>
         );
       })}
     </Layout>
@@ -177,9 +154,7 @@ export const getStaticProps: GetStaticProps = async () => {
   const blog: BlogProps["blog"] = await client.fetch(groq`
     *[_type == "blog"] {
       _id,
-      title,
-      slug,
-      mainImage{
+      image{
         ...asset->
       }
     }

@@ -36,7 +36,7 @@ const Home = ({ work }: HomeProps) => {
       const width = el?.querySelector("img")?.clientWidth ?? 0;
       const height = el?.querySelector("img")?.clientHeight ?? 0;
 
-      const gutter = 20;
+      const gutter = 100;
       const halfWin = window.innerWidth / 2;
       const randX = Math.random() * (halfWin - width);
       const x = i % 2 === 0 ? randX + halfWin - gutter : randX + gutter;
@@ -74,17 +74,16 @@ const Home = ({ work }: HomeProps) => {
     });
 
     // create a wall around the document.body
-    const offset = 25;
-    const wallOp = {
+    const wallOpt = {
       isStatic: true,
     };
     const iw = mainRef.current?.clientWidth ?? 0;
     const ih = mainRef.current?.clientHeight ?? 0;
     const walls = [
-      Matter.Bodies.rectangle(iw / 2, -offset, iw + 2 * offset, 50, wallOp),
-      Matter.Bodies.rectangle(iw / 2, ih + offset, iw + 2 * offset, 50, wallOp),
-      Matter.Bodies.rectangle(iw + offset, ih / 2, 50, ih + 2 * offset, wallOp),
-      Matter.Bodies.rectangle(-offset, ih / 2, 50, ih + 2 * offset, wallOp),
+      Matter.Bodies.rectangle(iw / 2, -10, iw, 20, wallOpt), // top
+      Matter.Bodies.rectangle(iw / 2, ih + 10, iw, 20, wallOpt), // bottom
+      Matter.Bodies.rectangle(-10, ih / 2, 20, ih, wallOpt), // left
+      Matter.Bodies.rectangle(iw + 10, ih / 2, 20, ih, wallOpt), // right
     ];
 
     Matter.World.add(engine.world, [
@@ -115,9 +114,18 @@ const Home = ({ work }: HomeProps) => {
     if (isMobile) return;
     animate();
 
+    const handleResize = () => {
+      if (requestRef.current) cancelAnimationFrame(requestRef.current);
+      if (engineRef.current) Matter.Engine.clear(engineRef.current);
+      animate();
+    };
+
+    window.addEventListener("resize", handleResize);
+
     return () => {
       if (requestRef.current) cancelAnimationFrame(requestRef.current);
       if (engineRef.current) Matter.Engine.clear(engineRef.current);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
@@ -131,7 +139,6 @@ const Home = ({ work }: HomeProps) => {
     event: React.MouseEvent<HTMLAnchorElement>,
     slug: string
   ) => {
-    event.preventDefault();
     const endX = event.clientX;
     const endY = event.clientY;
     const deltaX = Math.abs(endX - startX);
@@ -146,19 +153,21 @@ const Home = ({ work }: HomeProps) => {
     <Layout
       headerContinuation={
         <>
-          is a graphic designer, based in Oslo, Norway.He believes good design
-          (whatever that means) can be a force for change, and bring people
-          closer to each other.Andreas currently works as a designer at{" "}
-          <a href="https://stem.no" target="_blank" className="external-link">
-            Stem Agency
-          </a>
-          .
-          <br />
-          <br />
-          While he cites brand identity, strategy, illustration and copywriting
-          as some of his greatest professional strengths, he is chronically
-          curious and is always on the search for new typologies, methods and
-          contexts to work within.
+          <p>
+            is a graphic designer, based in Oslo, Norway.He believes good design
+            (whatever that means) can be a force for change, and bring people
+            closer to each other.Andreas currently works as a designer at{" "}
+            <a href="https://stem.no" target="_blank" className="external-link">
+              Stem Agency
+            </a>
+            .
+          </p>
+          <p>
+            While he cites brand identity, strategy, illustration and
+            copywriting as some of his greatest professional strengths, he is
+            chronically curious and is always on the search for new typologies,
+            methods and contexts to work within.
+          </p>
         </>
       }
       className="z-20"
@@ -175,10 +184,10 @@ const Home = ({ work }: HomeProps) => {
               onMouseUp={(e) =>
                 !notClickable && !isMobile && handleMouseUp(e, slug.current)
               }
-              onTouchEnd={() => void router.push(`/work/${slug.current}`)}
               key={_id}
               className="blend-invert group my-4 inline-flex w-full cursor-pointer flex-col will-change-transform hover:z-10 hover:underline lg:absolute lg:max-w-[400px]"
               ref={(el) => (imageWrapperRefs.current[index] = el)}
+              onClick={(e) => !isMobile && e.preventDefault()}
               href={notClickable ? undefined : `/work/${slug.current}`}
             >
               <Image
@@ -187,7 +196,7 @@ const Home = ({ work }: HomeProps) => {
                 className="pointer-events-none select-none object-cover grayscale group-hover:grayscale-0"
                 height={mainImage?.metadata?.dimensions?.height ?? 0}
                 placeholder="blur"
-                quality={70}
+                quality={60}
                 sizes="100vw"
                 src={urlFor(mainImage)?.url() ?? ""}
                 width={mainImage?.metadata?.dimensions?.width ?? 0}
