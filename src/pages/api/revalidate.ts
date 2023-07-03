@@ -6,7 +6,7 @@ export { config } from "next-sanity/webhook";
 
 const revalidatationMap: { [key: string]: string[] } = {
   work: ["/", "/work/[slug]"],
-  blog: ["/blog", "/blog/[slug]"],
+  blog: ["/blog"],
 };
 
 export default async function revalidate(
