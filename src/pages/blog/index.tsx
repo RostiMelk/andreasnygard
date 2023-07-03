@@ -29,7 +29,7 @@ const Blog = ({ blog }: BlogProps) => {
       const width = el?.querySelector("img")?.clientWidth ?? 0;
       const height = el?.querySelector("img")?.clientHeight ?? 0;
 
-      const gutter = 20;
+      const gutter = 100;
       const halfWin = window.innerWidth / 2;
       const randX = Math.random() * (halfWin - width);
       const x = i % 2 === 0 ? randX + halfWin - gutter : randX + gutter;
@@ -38,7 +38,7 @@ const Blog = ({ blog }: BlogProps) => {
         .slice(0, i)
         .reduce(
           (acc, el) => acc + Number(el?.querySelector("img")?.clientHeight),
-          200
+          0
         );
 
       return {
@@ -95,10 +95,7 @@ const Blog = ({ blog }: BlogProps) => {
     rerender();
 
     if (mainRef.current) {
-      const height = images.reduce(
-        (acc, el) => acc + el.elem.clientHeight,
-        200
-      );
+      const height = images.reduce((acc, el) => acc + el.elem.clientHeight, 0);
 
       mainRef.current.style.height = `${height}px`;
     }
