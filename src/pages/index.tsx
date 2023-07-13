@@ -115,7 +115,7 @@ const Home = ({ homePage, work }: HomeProps) => {
 
     setTimeout(() => {
       animate();
-    }, 1);
+    }, 3000);
 
     const handleResize = () => {
       if (requestRef.current) cancelAnimationFrame(requestRef.current);
