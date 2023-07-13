@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useCallback } from "react";
 import type { GetStaticProps } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -21,7 +21,7 @@ const Home = ({ homePage, work }: HomeProps) => {
   let startX = 0;
   let startY = 0;
 
-  const animate = () => {
+  const animate = useCallback(() => {
     engineRef.current = Matter.Engine.create();
     const engine: Matter.Engine = engineRef.current;
 
@@ -108,7 +108,7 @@ const Home = ({ homePage, work }: HomeProps) => {
 
       mainRef.current.style.height = `${height}px`;
     }
-  };
+  }, []);
 
   useEffect(() => {
     if (isMobile) return;
@@ -167,7 +167,6 @@ const Home = ({ homePage, work }: HomeProps) => {
         ({ _id, title, shortTitle, slug, notClickable, mainImage }, index) => {
           return (
             <a
-              // href={notClickable ? undefined : `/work/${slug.current}`}
               onMouseDown={(e) =>
                 !notClickable && !isMobile && handleMouseDown(e)
               }

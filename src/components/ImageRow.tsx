@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import type { SanityImageAssetDocument } from "@sanity/client";
-import clsx from "clsx";
+import clsx from "@/lib/clsx";
 
 import { urlFor } from "@/lib/sanity.client";
 

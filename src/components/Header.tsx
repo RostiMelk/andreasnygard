@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import clsx from "clsx";
+import clsx from "@/lib/clsx";
 import type { MenuItem } from "@/types";
 
 interface Props {
