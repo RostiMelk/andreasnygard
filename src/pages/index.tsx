@@ -157,6 +157,11 @@ const Home = ({ homePage, work }: HomeProps) => {
       continuationClassName="lg:absolute"
       className="z-20"
       ref={mainRef}
+      onTimeDoubleClick={() => {
+        if (engineRef.current) {
+          engineRef.current.gravity.y = 0.2;
+        }
+      }}
     >
       {work.map(
         ({ _id, title, shortTitle, slug, notClickable, mainImage }, index) => {

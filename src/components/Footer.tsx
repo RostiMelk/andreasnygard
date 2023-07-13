@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
-import clsx from "clsx";
 
 const strPad = (value: number) => {
   return String(value).padStart(2, "0");
 };
 
-export const Footer = () => {
+interface Props {
+  onTimeDoubleClick?: () => void;
+}
+
+export const Footer = ({ onTimeDoubleClick }: Props) => {
   const [currentHour, setCurrentHour] = useState(new Date().getHours());
   const [currentMinute, setCurrentMinute] = useState(new Date().getMinutes());
   const currentYear = new Date().getFullYear();
@@ -24,7 +27,7 @@ export const Footer = () => {
   }, []);
 
   return (
-    <footer className="relative mb-20">
+    <footer className="relative mb-20" onDoubleClick={onTimeDoubleClick}>
       <p className="container fixed left-0 top-7 text-base lg:bottom-7 lg:top-auto ">
         {strPad(currentHour)}
         <span className="animate-blink">:</span>

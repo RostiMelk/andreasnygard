@@ -11,6 +11,7 @@ interface Props {
   description?: string;
   headerContinuation?: React.ReactNode;
   continuationClassName?: string;
+  onTimeDoubleClick?: () => void;
 }
 
 export const Layout = React.forwardRef<HTMLDivElement, Props>(function Layout(
@@ -21,6 +22,7 @@ export const Layout = React.forwardRef<HTMLDivElement, Props>(function Layout(
     children,
     headerContinuation,
     continuationClassName,
+    onTimeDoubleClick,
   }: Props,
   ref: React.Ref<HTMLDivElement>
 ) {
@@ -64,7 +66,6 @@ export const Layout = React.forwardRef<HTMLDivElement, Props>(function Layout(
           sizes="16x16"
           href="/favicon-16x16.png"
         />
-        <link key="manifest" rel="manifest" href="/site.webmanifest" />
       </Head>
 
       <Header
@@ -90,7 +91,7 @@ export const Layout = React.forwardRef<HTMLDivElement, Props>(function Layout(
         {children}
       </main>
 
-      <Footer />
+      <Footer onTimeDoubleClick={onTimeDoubleClick} />
     </>
   );
 });
