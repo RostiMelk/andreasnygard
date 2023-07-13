@@ -73,14 +73,20 @@ const Home = ({ homePage, work }: HomeProps) => {
       collisionFilter: { category: 0b10 },
     });
 
+    // heights
+    const iw = mainRef.current?.clientWidth ?? 0;
+    let ih = 0;
+
+    // set height of main element
+    if (mainRef.current) {
+      ih = images.reduce((acc, el) => acc + el.elem.clientHeight, 200);
+      mainRef.current.style.height = `${ih}px`;
+    }
+
     // create a wall around the document.body
     const wallOpt = {
       isStatic: true,
     };
-    const iw = mainRef.current?.clientWidth ?? 0;
-    const ih = mainRef.current?.clientHeight ?? 0;
-
-    console.log({ iw, ih });
 
     const walls = [
       Matter.Bodies.rectangle(iw / 2, -10, iw, 20, wallOpt), // top
@@ -102,15 +108,6 @@ const Home = ({ homePage, work }: HomeProps) => {
     };
 
     rerender();
-
-    if (mainRef.current) {
-      const height = images.reduce(
-        (acc, el) => acc + el.elem.clientHeight,
-        200
-      );
-
-      mainRef.current.style.height = `${height}px`;
-    }
   }, []);
 
   useEffect(() => {
