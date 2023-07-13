@@ -28,7 +28,9 @@ export const Layout = React.forwardRef<HTMLDivElement, Props>(function Layout(
    * Meta tags:
    */
   title = title ? `${title} | Andreas Nygård` : "Andreas Nygård";
-  description = description || "Andreas Nygård";
+  description =
+    description ||
+    "Andreas Nygård is a graphic designer, based in Oslo, Norway. He believes good design (whatever that means) can be a force for change, and bring people closer to each other.";
 
   return (
     <>
