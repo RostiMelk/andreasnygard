@@ -10,7 +10,7 @@ const Contact = ({ contactPage }: ContactProps) => {
       headerContinuation={contactPage?.headerContinuation.map((block) => (
         <Wysiwyg key={block._key} value={block} />
       ))}
-      continuationClassName="grid [&>p]:indent-0"
+      continuationClassName="grid ![&>p]:indent-0"
     />
   );
 };
