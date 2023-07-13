@@ -112,7 +112,10 @@ const Home = ({ homePage, work }: HomeProps) => {
 
   useEffect(() => {
     if (isMobile) return;
-    animate();
+
+    setTimeout(() => {
+      animate();
+    }, 1);
 
     const handleResize = () => {
       if (requestRef.current) cancelAnimationFrame(requestRef.current);
