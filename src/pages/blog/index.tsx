@@ -121,7 +121,15 @@ const Blog = ({ blog }: BlogProps) => {
   }, []);
 
   return (
-    <Layout className="z-20" ref={mainRef}>
+    <Layout
+      className="z-20"
+      ref={mainRef}
+      onTimeDoubleClick={() => {
+        if (engineRef.current) {
+          engineRef.current.gravity.y = 0.2;
+        }
+      }}
+    >
       {blog.map(({ _id, image }, index) => {
         return (
           <div
