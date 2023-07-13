@@ -79,6 +79,9 @@ const Home = ({ homePage, work }: HomeProps) => {
     };
     const iw = mainRef.current?.clientWidth ?? 0;
     const ih = mainRef.current?.clientHeight ?? 0;
+
+    console.log({ iw, ih });
+
     const walls = [
       Matter.Bodies.rectangle(iw / 2, -10, iw, 20, wallOpt), // top
       Matter.Bodies.rectangle(iw / 2, ih + 10, iw, 20, wallOpt), // bottom
@@ -113,9 +116,7 @@ const Home = ({ homePage, work }: HomeProps) => {
   useEffect(() => {
     if (isMobile) return;
 
-    setTimeout(() => {
-      animate();
-    }, 3000);
+    animate();
 
     const handleResize = () => {
       if (requestRef.current) cancelAnimationFrame(requestRef.current);
