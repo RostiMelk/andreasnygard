@@ -10,10 +10,18 @@ interface Props {
   title?: string;
   description?: string;
   headerContinuation?: React.ReactNode;
+  continuationClassName?: string;
 }
 
 export const Layout = React.forwardRef<HTMLDivElement, Props>(function Layout(
-  { title, description, className, children, headerContinuation }: Props,
+  {
+    title,
+    description,
+    className,
+    children,
+    headerContinuation,
+    continuationClassName,
+  }: Props,
   ref: React.Ref<HTMLDivElement>
 ) {
   /**
@@ -59,6 +67,7 @@ export const Layout = React.forwardRef<HTMLDivElement, Props>(function Layout(
 
       <Header
         titleContinuation={headerContinuation}
+        continuationClassName={continuationClassName}
         navItems={[
           {
             title: "Blog",
@@ -75,10 +84,7 @@ export const Layout = React.forwardRef<HTMLDivElement, Props>(function Layout(
         ]}
       />
 
-      <main
-        className={clsx("container min-h-screen w-screen py-20", className)}
-        ref={ref}
-      >
+      <main className={clsx("container mb-20 w-screen", className)} ref={ref}>
         {children}
       </main>
 

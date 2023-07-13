@@ -1,14 +1,13 @@
 import { defineField, defineType } from "sanity";
 
 export default defineType({
-  name: "homePage",
-  title: "Home Page",
+  name: "contactPage",
+  title: "Contact Page",
   type: "document",
   fields: [
     defineField({
       name: "headerContinuation",
-      title: "Header continuation",
-      description: "Andreas Nygård ...",
+      title: "Content",
       type: "array",
       of: [{ type: "wysiwyg" }],
     }),

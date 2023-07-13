@@ -1,27 +1,48 @@
-import type { GetStaticPaths, GetStaticProps } from "next";
+import type { GetStaticProps } from "next";
 
-import { Layout } from "@/components";
+import type { AboutProps } from "./types";
+import { client, groq } from "@/lib/sanity.client";
+import { Layout, Wysiwyg, AboutWysiwyg } from "@/components";
 
-const About = () => {
+const About = ({ aboutPage }: AboutProps) => {
   return (
     <Layout
-      headerContinuation={
-        <>
-          <br />
-          T: <a href="tel:+4798123011">+47 981 23 011</a>
-          <br />
-          E:{" "}
-          <a href="mailto:hello@andreasnygard.no">
-            hello@hello@andreasnygard.no
-          </a>
-          <br />
-          <a href="https://www.linkedin.com/in/andreasnygard/">Linkedin</a>
-          <br />
-          <a href="https://www.instagram.com/andreasnygard/">Instagram</a>
-        </>
-      }
-    />
+      headerContinuation={aboutPage?.headerContinuation?.map((block) => (
+        <Wysiwyg key={block._key} value={block} />
+      ))}
+    >
+      <article className="two-col">
+        <section>
+          <h2 className="mb-7 border-b">Currently:</h2>
+          {aboutPage?.currentWork?.map((block) => (
+            <AboutWysiwyg key={block._key} value={block} />
+          ))}
+        </section>
+        <section>
+          <h2 className="mb-7 border-b">Previously:</h2>
+          {aboutPage?.previousWork?.map((block) => (
+            <AboutWysiwyg key={block._key} value={block} />
+          ))}
+        </section>
+      </article>
+    </Layout>
   );
+};
+
+export const getStaticProps: GetStaticProps = async () => {
+  const aboutPage: AboutProps["aboutPage"] = await client.fetch(groq`
+    *[_type == "aboutPage"][0] {
+      headerContinuation,
+      currentWork,
+      previousWork,
+    }
+  `);
+
+  return {
+    props: {
+      aboutPage,
+    },
+  };
 };
 
 export default About;

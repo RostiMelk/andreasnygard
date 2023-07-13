@@ -9,17 +9,15 @@ const Work = ({ work }: WorkProps) => {
 
   return (
     <Layout>
-      <main className="my-44">
-        <section className="mb-24 ml-auto lg:w-1/2">
-          {title && <h1 className="text-base">{title}</h1>}
-        </section>
+      <section className="col-right my-24">
+        {title && <h1 className="text-base">{title}</h1>}
+      </section>
 
-        <article>
-          {content?.map((block, i) => {
-            return <ContentBlocks key={block._key} block={block} />;
-          })}
-        </article>
-      </main>
+      <article className="mb-24">
+        {content?.map((block, i) => {
+          return <ContentBlocks key={block._key} block={block} />;
+        })}
+      </article>
     </Layout>
   );
 };

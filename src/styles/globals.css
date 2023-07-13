@@ -15,6 +15,9 @@
   .two-col {
     @apply lg:grid lg:grid-cols-2 lg:gap-8;
   }
+  .col-right {
+    @apply lg:ml-auto lg:w-1/2 lg:pl-4;
+  }
 }
 
 @layer utilities {

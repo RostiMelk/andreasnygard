@@ -6,10 +6,10 @@ import { isMobile } from "react-device-detect";
 
 import type { HomeProps } from "./types";
 import { client, groq, urlFor } from "@/lib/sanity.client";
-import { Layout } from "@/components";
+import { Layout, Wysiwyg } from "@/components";
 import Matter from "matter-js";
 
-const Home = ({ work }: HomeProps) => {
+const Home = ({ homePage, work }: HomeProps) => {
   const imageWrapperRefs = useRef<(HTMLAnchorElement | null)[]>([]);
   const requestRef = useRef<number>();
   const engineRef = useRef<Matter.Engine>();
@@ -151,25 +151,10 @@ const Home = ({ work }: HomeProps) => {
 
   return (
     <Layout
-      headerContinuation={
-        <>
-          <p>
-            is a graphic designer, based in Oslo, Norway.He believes good design
-            (whatever that means) can be a force for change, and bring people
-            closer to each other.Andreas currently works as a designer at{" "}
-            <a href="https://stem.no" target="_blank" className="external-link">
-              Stem Agency
-            </a>
-            .
-          </p>
-          <p>
-            While he cites brand identity, strategy, illustration and
-            copywriting as some of his greatest professional strengths, he is
-            chronically curious and is always on the search for new typologies,
-            methods and contexts to work within.
-          </p>
-        </>
-      }
+      headerContinuation={homePage?.headerContinuation?.map((block) => (
+        <Wysiwyg key={block._key} value={block} />
+      ))}
+      continuationClassName="lg:absolute"
       className="z-20"
       ref={mainRef}
     >
@@ -213,6 +198,12 @@ const Home = ({ work }: HomeProps) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
+  const homePage: HomeProps["homePage"] = await client.fetch(groq`
+    *[_type == "homePage"][0] {
+      headerContinuation,
+    }
+  `);
+
   const work: HomeProps["work"] = await client.fetch(groq`
     *[_type == "work"] {
       _id,
@@ -228,6 +219,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
   return {
     props: {
+      homePage,
       work,
     },
   };

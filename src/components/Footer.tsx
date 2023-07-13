@@ -24,14 +24,14 @@ export const Footer = () => {
   }, []);
 
   return (
-    <footer className="relative mb-8 lg:mb-0">
-      <p className="container bottom-7 left-0 text-base lg:fixed">
+    <footer className="relative mb-20">
+      <p className="container fixed left-0 top-7 text-base lg:bottom-7 lg:top-auto ">
         {strPad(currentHour)}
         <span className="animate-blink">:</span>
         {strPad(currentMinute)} OSL, NOR
       </p>
 
-      <p className="container bottom-7 text-base lg:absolute lg:text-right">
+      <p className="text-balance container bottom-7 text-base lg:fixed lg:text-right">
         Copyright ©{currentYear} Andreas Nygård, All rights reserved
       </p>
     </footer>

@@ -1,12 +1,21 @@
-import { blog, homePage, work } from "@/schemas/documents";
+import {
+  aboutPage,
+  blog,
+  contactPage,
+  homePage,
+  work,
+} from "@/schemas/documents";
 import { wysiwyg, imageRow } from "@/schemas/objects";
 
 export const schemaTypes = [
   // Documents
+  aboutPage,
   blog,
-  //   homePage,
+  contactPage,
+  homePage,
   work,
   // Objects
-  wysiwyg,
   imageRow,
+  wysiwyg,
+  // text,
 ];

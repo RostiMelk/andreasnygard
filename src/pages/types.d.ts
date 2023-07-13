@@ -12,5 +12,12 @@ export interface WorkDocument {
 }
 
 export interface HomeProps {
+  homePage: {
+    headerContinuation: {
+      _key: string;
+      _type: string;
+      [key: string]: any;
+    }[];
+  };
   work: WorkDocument[];
 }

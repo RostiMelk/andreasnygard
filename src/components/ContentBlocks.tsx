@@ -1,5 +1,5 @@
 import React from "react";
-import { Wysiwyg, ImageRow } from "@/components";
+import { WorkWysiwyg, ImageRow } from "@/components";
 
 interface Props {
   block: {
@@ -14,7 +14,7 @@ export const ContentBlocks = ({ block }: Props) => {
   return (
     <>
       {_type === "imageRow" && <ImageRow {...props} />}
-      {_type === "wysiwyg" && <Wysiwyg value={block} />}
+      {_type === "wysiwyg" && <WorkWysiwyg value={block} />}
     </>
   );
 };

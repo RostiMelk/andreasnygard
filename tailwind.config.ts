@@ -3,6 +3,13 @@ import { type Config } from "tailwindcss";
 export default {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
+    borderWidth: {
+      DEFAULT: "3px",
+      0: "0",
+    },
+    borderColor: {
+      DEFAULT: "#000",
+    },
     extend: {
       fontFamily: {
         sans: ["var(--font-stk-bureau)", "sans-serif"],

@@ -4,7 +4,7 @@ import { PortableText } from "@portabletext/react";
 const components = {
   block: {
     normal: (props: any) => (
-      <p {...props} className="indent-7 text-base [&>a]:underline" />
+      <p {...props} className="mb-7 text-base [&>a]:underline" />
     ),
   },
   list: {
@@ -23,6 +23,6 @@ const components = {
   },
 };
 
-export const Wysiwyg = (props: any) => {
+export const AboutWysiwyg = (props: any) => {
   return <PortableText {...props} components={components} />;
 };

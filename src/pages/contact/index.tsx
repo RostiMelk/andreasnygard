@@ -1,27 +1,34 @@
-import type { GetStaticPaths, GetStaticProps } from "next";
+import type { GetStaticProps } from "next";
 
-import { Layout } from "@/components";
+import type { ContactProps } from "./types";
+import { client, groq } from "@/lib/sanity.client";
+import { Layout, Wysiwyg } from "@/components";
 
-const Contact = () => {
+const Contact = ({ contactPage }: ContactProps) => {
   return (
     <Layout
-      headerContinuation={
-        <>
-          <br />
-          T: <a href="tel:+4798123011">+47 981 23 011</a>
-          <br />
-          E:{" "}
-          <a href="mailto:hello@andreasnygard.no">
-            hello@hello@andreasnygard.no
-          </a>
-          <br />
-          <a href="https://www.linkedin.com/in/andreasnygard/">Linkedin</a>
-          <br />
-          <a href="https://www.instagram.com/andreasnygard/">Instagram</a>
-        </>
-      }
+      headerContinuation={contactPage?.headerContinuation.map((block) => (
+        <Wysiwyg key={block._key} value={block} />
+      ))}
+      continuationClassName="grid [&>p]:indent-0"
     />
   );
+};
+
+export const getStaticProps: GetStaticProps = async () => {
+  const contactPage: ContactProps["contactPage"] = await client.fetch(groq`
+    *[_type == "contactPage"][0] {
+      headerContinuation,
+      currentWork,
+      previousWork,
+    }
+  `);
+
+  return {
+    props: {
+      contactPage,
+    },
+  };
 };
 
 export default Contact;

@@ -7,6 +7,7 @@ export { config } from "next-sanity/webhook";
 const revalidatationMap: { [key: string]: string[] } = {
   work: ["/", "/work/[slug]"],
   blog: ["/blog"],
+  about: ["/about"],
 };
 
 export default async function revalidate(
@@ -45,7 +46,7 @@ export default async function revalidate(
 
     for (const route of revalidatationMap[type] as string[]) {
       const staleRoute = route.replace("[slug]", slug.current);
-      console.log(`Revalidating route: ${staleRoute}`);
+      console.info(`Revalidating route: ${staleRoute}`);
       await res.revalidate(staleRoute);
     }
 
