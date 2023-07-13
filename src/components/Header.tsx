@@ -49,7 +49,7 @@ export const Header = ({
       {titleContinuation && (
         <span
           className={clsx(
-            "container m-0 mb-11 mt-20 block text-base lg:mt-7 lg:w-1/2 [&>p:nth-child(2)]:inline [&>p]:indent-7",
+            "container m-0 mb-11 mt-20 block text-base lg:mt-7 lg:w-1/2 [&>p:nth-child(2)]:inline",
             continuationClassName
           )}
         >
