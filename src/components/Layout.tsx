@@ -45,26 +45,62 @@ export const Layout = React.forwardRef<HTMLDivElement, Props>(function Layout(
           name="viewport"
           content="width=device-width, initial-scale=1"
         />
-
         <link
-          key="favicon-180"
-          rel="apple-touch-icon"
-          sizes="180x180"
-          href="/apple-touch-icon.png"
-        />
-        <link
-          key="favicon-32"
+          key="favicon-sv"
           rel="icon"
-          type="image/png"
-          sizes="32x32"
-          href="/favicon-32x32.png"
+          type="image/svg+xml"
+          href="/favicon.svg"
         />
-        <link
-          key="favicon-16"
-          rel="icon"
-          type="image/png"
-          sizes="16x16"
-          href="/favicon-16x16.png"
+        <link key="favicon" rel="icon" type="image/png" href="/favicon.png" />
+        <meta key="og:title" property="og:title" content={title} />
+        <meta
+          key="og:description"
+          property="og:description"
+          content={description}
+        />
+        <meta key="og:type" property="og:type" content="website" />
+        <meta
+          key="og:url"
+          property="og:url"
+          content="https://andreasnygard.no"
+        />
+        <meta
+          key="og:image"
+          property="og:image"
+          content="https://andreasnygard.no/og-image.jpg"
+        />
+        <meta key="og:image:width" property="og:image:width" content="1600" />
+        <meta key="og:image:height" property="og:image:height" content="900" />
+        <meta
+          key="og:image:alt"
+          property="og:image:alt"
+          content="Andreas Nygård"
+        />
+        <meta
+          key="og:site_name"
+          property="og:site_name"
+          content="Andreas Nygård"
+        />
+        <meta
+          key="twitter:card"
+          property="twitter:card"
+          content="summary_large_image"
+        />
+        <meta key="twitter:title" property="twitter:title" content={title} />
+        <meta
+          key="twitter:description"
+          property="twitter:description"
+          content={description}
+        />
+        <meta
+          key="twitter:image"
+          property="twitter:image"
+          content="https://andreasnygard.no/og-image.jpg"
+        />
+        <meta
+          key="twitter:image:alt"
+          property="twitter:image:alt"
+          content="Andreas Nygård"
         />
       </Head>
 
