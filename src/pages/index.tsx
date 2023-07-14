@@ -60,8 +60,6 @@ const Home = ({ homePage, work }: HomeProps) => {
     >
       {work?.map(
         ({ _id, title, shortTitle, slug, notClickable, mainImage }, index) => {
-          console.log(mainImage);
-
           return (
             <a
               onMouseDown={(e) =>
