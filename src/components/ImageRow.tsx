@@ -15,7 +15,9 @@ interface Props {
 
 export const ImageRow = ({ className, imageRow }: Props) => {
   return (
-    <section className={clsx("mb-8 flex gap-8", className)}>
+    <section
+      className={clsx("mb-8 flex flex-col gap-8 md:flex-row", className)}
+    >
       {imageRow?.map(({ asset, _key }) => (
         <div key={_key} className="flex-1">
           <Image
