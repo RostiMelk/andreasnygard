@@ -71,7 +71,7 @@ const Navigation = ({
   <nav>
     <ul className={clsx("flex justify-between", className)}>
       {navItems?.map((item, i) => (
-        <li key={i} className="first:[&>a]:pl-0 last:[&>a]:pr-0">
+        <li key={i} className="[&>a]:first:pl-0 [&>a]:last:pr-0">
           <Link
             className="p-5 text-base hover:underline lg:p-0"
             href={item.url}
