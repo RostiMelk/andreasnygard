@@ -82,6 +82,7 @@ const Home = ({ homePage, work }: HomeProps) => {
                 className="pointer-events-none select-none object-cover grayscale  group-hover:grayscale-0"
                 height={mainImage?.metadata?.dimensions?.height ?? 0}
                 placeholder="blur"
+                quality={100}
                 sizes="100vw"
                 src={urlFor(mainImage)?.width(400).quality(85).url()}
                 width={mainImage?.metadata?.dimensions?.width ?? 0}

@@ -32,6 +32,7 @@ export const ImageRow = ({ className, imageRow }: Props) => {
             className="h-auto w-full"
             height={asset?.metadata?.dimensions?.height ?? 0}
             placeholder="blur"
+            quality={100}
             src={urlFor(asset)
               .width(maxWidth[imageRow.length] ?? 1800)
               .quality(85)

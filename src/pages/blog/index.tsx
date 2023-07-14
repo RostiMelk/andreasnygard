@@ -39,6 +39,7 @@ const Blog = ({ blog }: BlogProps) => {
               className="pointer-events-none select-none object-cover"
               height={image?.metadata?.dimensions?.height ?? 0}
               placeholder="blur"
+              quality={100}
               sizes="100vw"
               src={urlFor(image)?.width(400).quality(85).url()}
               width={image?.metadata?.dimensions?.width ?? 0}
