@@ -28,7 +28,7 @@ export const ImageRow = ({ className, imageRow }: Props) => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
+        if (entry?.isIntersecting) {
           ref.current?.classList.add("opacity-100");
         }
       },
