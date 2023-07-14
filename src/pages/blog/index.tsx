@@ -1,6 +1,6 @@
 import { useRef, useEffect } from "react";
 import type { GetStaticProps } from "next";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { isMobile } from "react-device-detect";
 
 import type { BlogProps } from "./types";
@@ -139,7 +139,7 @@ const Blog = ({ blog }: BlogProps) => {
           >
             <Image
               alt=""
-              blurDataURL={urlFor(image).width(30).url()}
+              blurDataURL={urlFor(image).width(50).url()}
               className="pointer-events-none select-none object-cover"
               height={image?.metadata?.dimensions?.height ?? 0}
               placeholder="blur"

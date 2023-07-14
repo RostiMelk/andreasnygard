@@ -1,5 +1,5 @@
 import React from "react";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import type { SanityImageAssetDocument } from "@sanity/client";
 import clsx from "@/lib/clsx";
 
@@ -21,7 +21,7 @@ export const ImageRow = ({ className, imageRow }: Props) => {
           <Image
             src={urlFor(asset)?.url() ?? ""}
             placeholder="blur"
-            blurDataURL={urlFor(asset).width(30).url()}
+            blurDataURL={urlFor(asset).width(50).url()}
             width={asset?.metadata?.dimensions?.width ?? 0}
             height={asset?.metadata?.dimensions?.height ?? 0}
             alt={""} // TODO: Add alt text

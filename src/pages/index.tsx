@@ -1,6 +1,6 @@
 import { useRef, useEffect, useCallback } from "react";
 import type { GetStaticProps } from "next";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { useRouter } from "next/router";
 import { isMobile } from "react-device-detect";
 
@@ -182,7 +182,7 @@ const Home = ({ homePage, work }: HomeProps) => {
             >
               <Image
                 alt=""
-                blurDataURL={urlFor(mainImage).width(30).url()}
+                blurDataURL={urlFor(mainImage).width(50).url()}
                 className="pointer-events-none select-none object-cover grayscale group-hover:grayscale-0"
                 height={mainImage?.metadata?.dimensions?.height ?? 0}
                 placeholder="blur"
