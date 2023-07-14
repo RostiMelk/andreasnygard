@@ -65,7 +65,7 @@ const Home = ({ homePage, work }: HomeProps) => {
                 !notClickable && !isMobile && handleMouseUp(e, slug.current)
               }
               key={_id}
-              className="blend-invert group inline-flex w-full cursor-pointer flex-col opacity-0 transition-opacity will-change-transform hover:z-10 hover:underline lg:absolute lg:max-w-[400px]"
+              className="blend-invert group inline-flex w-full cursor-pointer flex-col transition-opacity will-change-transform hover:z-10 hover:underline lg:absolute lg:max-w-[400px] lg:opacity-0"
               ref={(el) => (imageWrapperRefs.current[index] = el)}
               onClick={(e) => !isMobile && e.preventDefault()}
               href={notClickable ? undefined : `/work/${slug.current}`}
