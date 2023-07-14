@@ -84,7 +84,7 @@ const Home = ({ homePage, work }: HomeProps) => {
                 placeholder="blur"
                 quality={100}
                 sizes="100vw"
-                src={urlFor(mainImage)?.width(400).quality(85).url()}
+                src={urlFor(mainImage)?.width(600).quality(85).url()}
                 width={mainImage?.metadata?.dimensions?.width ?? 0}
               />
               <h4 className="mt-4 text-base group-hover:visible lg:invisible">
