@@ -41,7 +41,7 @@ const Blog = ({ blog }: BlogProps) => {
               placeholder="blur"
               quality={60}
               sizes="100vw"
-              src={urlFor(image)?.url() ?? ""}
+              src={urlFor(image)?.maxWidth(400).quality(70).url()}
               width={image?.metadata?.dimensions?.width ?? 0}
             />
           </div>

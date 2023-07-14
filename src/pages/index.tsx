@@ -60,6 +60,8 @@ const Home = ({ homePage, work }: HomeProps) => {
     >
       {work?.map(
         ({ _id, title, shortTitle, slug, notClickable, mainImage }, index) => {
+          console.log(mainImage);
+
           return (
             <a
               onMouseDown={(e) =>
@@ -80,9 +82,9 @@ const Home = ({ homePage, work }: HomeProps) => {
                 className="pointer-events-none select-none object-cover grayscale  group-hover:grayscale-0"
                 height={mainImage?.metadata?.dimensions?.height ?? 0}
                 placeholder="blur"
-                quality={60}
+                quality={70}
                 sizes="100vw"
-                src={urlFor(mainImage)?.url() ?? ""}
+                src={urlFor(mainImage)?.maxWidth(400).quality(70).url()}
                 width={mainImage?.metadata?.dimensions?.width ?? 0}
               />
               <h4 className="mt-4 text-base group-hover:visible lg:invisible">

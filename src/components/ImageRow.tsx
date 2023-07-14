@@ -21,13 +21,13 @@ export const ImageRow = ({ className, imageRow }: Props) => {
       {imageRow?.map(({ asset, _key }) => (
         <div key={_key} className="flex-1">
           <Image
-            src={urlFor(asset)?.url() ?? ""}
+            src={urlFor(asset).maxWidth(800).quality(70).url()}
             placeholder="blur"
             blurDataURL={urlFor(asset).width(50).url()}
             width={asset?.metadata?.dimensions?.width ?? 0}
             height={asset?.metadata?.dimensions?.height ?? 0}
             alt={""} // TODO: Add alt text
-            className="h-auto"
+            className="h-auto w-full"
             quality={70}
           />
         </div>
