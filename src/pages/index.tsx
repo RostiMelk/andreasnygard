@@ -7,12 +7,16 @@ import { isMobile } from "react-device-detect";
 import type { HomeProps } from "./types";
 import { client, groq, urlFor } from "@/lib/sanity.client";
 import { Layout, Wysiwyg } from "@/components";
-import { useMatter } from "@/hooks";
+import { useMatterGrid } from "@/hooks";
 
 const Home = ({ homePage, work }: HomeProps) => {
   const imageWrapperRefs = useRef<(HTMLAnchorElement | null)[]>([]);
   const mainRef = useRef<HTMLDivElement>(null);
-  const { engineRef } = useMatter({ imageWrapperRefs, mainRef, spacing: 200 });
+  const { engineRef } = useMatterGrid({
+    imageWrapperRefs,
+    mainRef,
+    spacing: 200,
+  });
 
   const router = useRouter();
 

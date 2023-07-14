@@ -5,12 +5,16 @@ import Image from "next/legacy/image";
 import type { BlogProps } from "./types";
 import { client, groq, urlFor } from "@/lib/sanity.client";
 import { Layout } from "@/components";
-import { useMatter } from "@/hooks";
+import { useMatterGrid } from "@/hooks";
 
 const Blog = ({ blog }: BlogProps) => {
   const imageWrapperRefs = useRef<(HTMLDivElement | null)[]>([]);
   const mainRef = useRef<HTMLDivElement>(null);
-  const { engineRef } = useMatter({ imageWrapperRefs, mainRef, spacing: 0 });
+  const { engineRef } = useMatterGrid({
+    imageWrapperRefs,
+    mainRef,
+    spacing: 0,
+  });
 
   return (
     <Layout

@@ -1,1 +1,1 @@
-export { useMatter } from "./useMatter";
+export { useMatterGrid } from "./useMatterGrid";

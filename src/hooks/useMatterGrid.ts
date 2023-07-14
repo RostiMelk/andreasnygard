@@ -12,7 +12,7 @@ interface Options {
   gutter?: number;
 }
 
-export const useMatter = ({
+export const useMatterGrid = ({
   imageWrapperRefs,
   mainRef,
   spacing = 200,
@@ -37,8 +37,8 @@ export const useMatter = ({
       const height = el?.querySelector("img")?.clientHeight ?? 0;
 
       const halfWin = window.innerWidth / 2;
-      const randX = Math.random() * (halfWin - width);
-      const x = i % 2 === 0 ? randX + halfWin - gutter : randX + gutter;
+      const center = (halfWin - width) / 2;
+      const x = i % 2 === 0 ? center + halfWin - gutter : center + gutter;
 
       const y = imageWrapperRefs.current
         .slice(0, i)
