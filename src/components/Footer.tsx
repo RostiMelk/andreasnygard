@@ -28,7 +28,7 @@ export const Footer = ({ onTimeDoubleClick }: Props) => {
 
   return (
     <footer className="relative mb-20" onDoubleClick={onTimeDoubleClick}>
-      <p className="container fixed left-0 top-7 text-base lg:bottom-7 lg:top-auto ">
+      <p className="blend-invert container fixed left-0 top-7 text-base lg:bottom-7 lg:top-auto">
         {strPad(currentHour)}
         <span className="animate-blink">:</span>
         {strPad(currentMinute)} OSL, NOR

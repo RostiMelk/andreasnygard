@@ -41,8 +41,9 @@ export const Header = ({
         <Navigation className="hidden lg:flex" navItems={navItems} />
       </header>
 
+      {/* Mobile navigation */}
       <Navigation
-        className="container fixed bottom-7 z-50 w-full lg:hidden"
+        className="blend-invert container fixed bottom-7 z-50 w-full lg:hidden"
         navItems={navItems}
       />
 
