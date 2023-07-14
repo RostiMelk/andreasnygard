@@ -34,7 +34,7 @@ export const Footer = ({ onTimeDoubleClick }: Props) => {
         {strPad(currentMinute)} OSL, NOR
       </p>
 
-      <p className="text-balance container bottom-7 text-base lg:fixed lg:text-right">
+      <p className="blend-invert text-balance container bottom-7 text-base lg:fixed lg:text-right">
         Copyright ©{currentYear} Andreas Nygård, All rights reserved
       </p>
     </footer>
