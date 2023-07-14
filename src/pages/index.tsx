@@ -78,12 +78,12 @@ const Home = ({ homePage, work }: HomeProps) => {
             >
               <Image
                 alt=""
-                blurDataURL={urlFor(mainImage).width(50).url()}
+                blurDataURL={urlFor(mainImage).width(50).quality(20).url()}
                 className="pointer-events-none select-none object-cover grayscale  group-hover:grayscale-0"
                 height={mainImage?.metadata?.dimensions?.height ?? 0}
                 placeholder="blur"
                 sizes="100vw"
-                src={urlFor(mainImage)?.width(400).quality(70).url()}
+                src={urlFor(mainImage)?.width(400).quality(85).url()}
                 width={mainImage?.metadata?.dimensions?.width ?? 0}
               />
               <h4 className="mt-4 text-base group-hover:visible lg:invisible">

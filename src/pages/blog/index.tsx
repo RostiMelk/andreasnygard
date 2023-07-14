@@ -35,12 +35,12 @@ const Blog = ({ blog }: BlogProps) => {
           >
             <Image
               alt=""
-              blurDataURL={urlFor(image).width(50).url()}
+              blurDataURL={urlFor(image).width(50).quality(20).url()}
               className="pointer-events-none select-none object-cover"
               height={image?.metadata?.dimensions?.height ?? 0}
               placeholder="blur"
               sizes="100vw"
-              src={urlFor(image)?.width(400).quality(70).url()}
+              src={urlFor(image)?.width(400).quality(85).url()}
               width={image?.metadata?.dimensions?.width ?? 0}
             />
           </div>
