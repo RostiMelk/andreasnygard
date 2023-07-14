@@ -65,7 +65,7 @@ export const useMatterGrid = ({
             y - height / 2
           }px) rotate(${this.body.angle}rad)`;
           this.elem.style.opacity = "1";
-          this.elem.style.transitionDelay = `${i * 0.1}s`;
+          this.elem.style.transitionDelay = `${(i + 1) * 0.15}s`;
         },
       };
     });
