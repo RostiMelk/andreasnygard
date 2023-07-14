@@ -73,7 +73,7 @@ const Navigation = ({
       {navItems?.map((item, i) => (
         <li key={i}>
           <Link
-            className="p-5 text-base hover:underline lg:p-0"
+            className="p-5 text-base first:pl-0 last:pr-0 hover:underline lg:p-0"
             href={item.url}
             target={item.newTab ? "_blank" : undefined}
           >
