@@ -28,6 +28,7 @@ export default defineConfig({
               .child(
                 S.editor()
                   .id("homepage")
+                  .title("Homepage")
                   .schemaType("homePage")
                   .documentId("homePage")
               ),
@@ -36,6 +37,7 @@ export default defineConfig({
               .child(
                 S.editor()
                   .id("aboutPage")
+                  .title("About")
                   .schemaType("aboutPage")
                   .documentId("aboutPage")
               ),
@@ -44,6 +46,7 @@ export default defineConfig({
               .child(
                 S.editor()
                   .id("contactPage")
+                  .title("Contact")
                   .schemaType("contactPage")
                   .documentId("contactPage")
               ),
@@ -72,6 +75,7 @@ export default defineConfig({
               .child(
                 S.editor()
                   .id("notFoundPage")
+                  .title("404 Page")
                   .schemaType("notFoundPage")
                   .documentId("notFoundPage")
               ),
