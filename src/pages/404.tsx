@@ -87,8 +87,6 @@ const Error404 = () => {
 
     if (newHead.top === food.top && newHead.left === food.left) {
       handleNewFood();
-    } else {
-      snake.pop();
     }
 
     setSnake([newHead, ...snake]);
