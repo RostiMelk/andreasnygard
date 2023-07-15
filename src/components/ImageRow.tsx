@@ -91,10 +91,10 @@ export const ImageRow = ({ className, imageRow }: Props) => {
           return (
             <div
               key={_key}
-              className="flex-1 [--controls:none] [--media-secondary-color:#fff]"
-              style={{
-                aspectRatio: asset?.data?.aspect_ratio?.replace(":", "/"),
-              }}
+              className="flex-1 object-cover [--controls:none] [--media-secondary-color:#fff]"
+              // style={{
+              //   aspectRatio: asset?.data?.aspect_ratio?.replace(":", "/"),
+              // }}
             >
               <MuxPlayer
                 autoPlay={true}
@@ -103,7 +103,7 @@ export const ImageRow = ({ className, imageRow }: Props) => {
                 playbackId={asset.playbackId}
                 playsInline={true}
                 streamType="on-demand"
-                className="flex h-full bg-white opacity-0 transition-opacity duration-500"
+                className="flex h-full bg-white object-cover opacity-0 transition-opacity duration-500"
                 disableCookies={true}
                 onLoadedData={(e) => {
                   const target = e?.target as HTMLVideoElement;
