@@ -9,11 +9,11 @@ const Work = ({ work }: WorkProps) => {
 
   return (
     <Layout>
-      <section className="col-right my-24">
+      <section className="col-right mt-32">
         {title && <h1 className="text-base">{title}</h1>}
       </section>
 
-      <article className="mb-24">
+      <article className="my-24">
         {content?.map((block, i) => {
           return <ContentBlocks key={block._key} block={block} />;
         })}

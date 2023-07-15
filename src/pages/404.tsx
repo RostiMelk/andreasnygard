@@ -44,7 +44,9 @@ const oppositeDirections: Record<Direction, Direction> = {
 const Error404 = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [gridSize, setGridSize] = useState({ width: 0, height: 0 });
-  const [snake, setSnake] = useState<Point[]>(initialSnake);
+  const [snake, setSnake] = useState<Point[]>(() =>
+    structuredClone(initialSnake)
+  );
   const [direction, setDirection] = useState<Direction>("RIGHT");
   const [food, setFood] = useState<Point>({ top: 10, left: 20 });
   const [foodType, setFoodType] = useState(0);
@@ -79,21 +81,23 @@ const Error404 = () => {
       type: head.type === 4 ? 0 : 4,
     };
 
-    // Check if the snake has hit itself
+    if (newHead.top === food.top && newHead.left === food.left) {
+      handleNewFood();
+    } else if (snake.length >= initialSnake.length) {
+      snake.pop();
+    }
+
     const isOverlapping = snake.some(
       (point) => point.top === newHead.top && point.left === newHead.left
     );
+
     if (snake.length > initialSnake.length && isOverlapping) {
       setSnake(initialSnake);
       handleNewFood();
       return;
     }
 
-    if (newHead.top === food.top && newHead.left === food.left) {
-      handleNewFood();
-    } else if (snake.length > initialSnake.length - 1) {
-      snake.pop();
-    }
+    initialSnake.length;
 
     setSnake([newHead, ...snake]);
   }, [snake, direction, gridSize, food, handleNewFood]);
@@ -146,13 +150,13 @@ const Error404 = () => {
       description="Play a game of snake"
       ref={containerRef}
       headerContinuation="not found"
-      className="blend-invert fixed bottom-0 left-0 right-0 top-0 h-screen overflow-hidden"
+      className="blend-invert pointer-events-none fixed bottom-0 left-0 right-0 top-0 h-screen overflow-hidden "
     >
       {!isMobile &&
         Array.from({ length: gridSize.height }, (_, i) => i).map((i) => (
           <div key={i} className="flex" aria-hidden="true">
             {Array.from({ length: gridSize.width }, (_, j) => j).map((j) => (
-              <span key={j} className="line-height-0 inline-block h-4 w-4">
+              <span key={j} className="line-height-0inline-block h-4 w-4">
                 {snake.find((p) => p.top === i && p.left === j)?.type ??
                   (food.top === i && food.left === j ? foodType : null)}
               </span>

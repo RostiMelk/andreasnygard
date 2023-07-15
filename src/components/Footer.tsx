@@ -28,13 +28,13 @@ export const Footer = ({ onTimeDoubleClick }: Props) => {
 
   return (
     <footer className="relative mb-20" onDoubleClick={onTimeDoubleClick}>
-      <p className="blend-invert container fixed left-0 top-7 text-base lg:bottom-7 lg:top-auto">
+      <p className="blend-invert container fixed left-0 top-8 text-base lg:bottom-8 lg:top-auto">
         {strPad(currentHour)}
         <span className="animate-blink">:</span>
         {strPad(currentMinute)} OSL, NOR
       </p>
 
-      <p className="blend-invert text-balance container bottom-7 text-base lg:fixed lg:text-right">
+      <p className="blend-invert text-balance container bottom-8 text-base lg:fixed lg:text-right">
         Copyright ©{currentYear} Andreas Nygård, All rights reserved
       </p>
     </footer>

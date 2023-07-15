@@ -25,9 +25,9 @@ export const Header = ({
     <>
       <header
         className={clsx(
-          "lg:two-col blend-invert container fixed z-10 lg:top-7 lg:text-left",
+          "lg:two-col blend-invert container fixed z-10 lg:top-8 lg:text-left",
           {
-            "top-7 text-right": !titleContinuation,
+            "top-8 text-right": !titleContinuation,
             "top-20 text-left": titleContinuation,
           }
         )}
@@ -43,14 +43,14 @@ export const Header = ({
 
       {/* Mobile navigation */}
       <Navigation
-        className="blend-invert container fixed bottom-7 z-50 w-full lg:hidden"
+        className="blend-invert container fixed bottom-8 z-50 w-full lg:hidden"
         navItems={navItems}
       />
 
       {titleContinuation && (
         <span
           className={clsx(
-            "container m-0 mb-11 mt-20 block text-base lg:mt-7 lg:w-1/2 [&>p:nth-child(2)]:inline",
+            "container m-0 mb-11 mt-20 block text-base lg:mt-8 lg:w-1/2 [&>p:nth-child(2)]:inline",
             continuationClassName
           )}
         >
