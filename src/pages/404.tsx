@@ -172,7 +172,7 @@ const Error404 = () => {
     const speed = Math.max(2, 500 - snake.length * 5 - gridSize.width * 3.2);
 
     // If snake is more than 15 long, lock the walls
-    if (snake.length > 4) {
+    if (snake.length > 15) {
       setWallLock(true);
     }
 
