@@ -10,8 +10,8 @@ interface Props {
   continuationClassName?: string;
   description?: string;
   headerContinuation?: React.ReactNode;
-
   hideFooter?: boolean;
+  hideNav?: boolean;
   hideTitle?: boolean;
   onTimeDoubleClick?: () => void;
   title?: string;
@@ -25,6 +25,7 @@ export const Layout = React.forwardRef<HTMLDivElement, Props>(function Layout(
     description,
     headerContinuation,
     hideFooter,
+    hideNav,
     hideTitle,
     onTimeDoubleClick,
     title,
@@ -126,6 +127,7 @@ export const Layout = React.forwardRef<HTMLDivElement, Props>(function Layout(
             url: "/contact",
           },
         ]}
+        hideNav={hideNav}
         hideTitle={hideTitle}
       />
 

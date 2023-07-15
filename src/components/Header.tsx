@@ -12,6 +12,7 @@ interface Props {
    */
   titleContinuation?: React.ReactNode;
   continuationClassName?: string;
+  hideNav?: boolean;
   hideTitle?: boolean;
 }
 
@@ -19,6 +20,7 @@ export const Header = ({
   navItems,
   titleContinuation,
   continuationClassName,
+  hideNav,
   hideTitle,
 }: Props) => {
   const title = "ANDREAS NYGÅRD";
@@ -41,14 +43,20 @@ export const Header = ({
             </Link>
           </h1>
         )}
-        <Navigation className="hidden lg:flex" navItems={navItems} />
+
+        {/* Desktop navigation */}
+        {!hideNav && (
+          <Navigation className="hidden lg:flex" navItems={navItems} />
+        )}
       </header>
 
       {/* Mobile navigation */}
-      <Navigation
-        className="blend-invert container fixed bottom-8 z-50 w-full lg:hidden"
-        navItems={navItems}
-      />
+      {!hideNav && (
+        <Navigation
+          className="blend-invert container fixed bottom-8 z-50 w-full lg:hidden"
+          navItems={navItems}
+        />
+      )}
 
       {titleContinuation && (
         <span
