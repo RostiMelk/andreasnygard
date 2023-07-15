@@ -9,7 +9,7 @@ import { urlFor } from "@/lib/sanity.client";
 
 interface Props {
   className?: string;
-  imageRow: Array<
+  imageRow?: Array<
     | {
         _key: string;
         _type: "image";
