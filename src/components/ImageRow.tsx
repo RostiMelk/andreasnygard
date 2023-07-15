@@ -58,13 +58,11 @@ export const ImageRow = ({ className, imageRow }: Props) => {
     };
   }, []);
 
-  console.log(imageRow);
-
   return (
     <section
       ref={ref}
       className={clsx(
-        "mb-8 flex flex-col gap-8 opacity-0 transition-all  duration-500 md:flex-row",
+        "mb-8 flex flex-col gap-8 opacity-0 transition-all duration-500 md:flex-row",
         className
       )}
     >
@@ -105,8 +103,12 @@ export const ImageRow = ({ className, imageRow }: Props) => {
                 playbackId={asset.playbackId}
                 playsInline={true}
                 streamType="on-demand"
-                className="flex h-full bg-white"
+                className="flex h-full bg-white opacity-0 transition-opacity duration-500"
                 disableCookies={true}
+                onLoadedData={(e) => {
+                  const target = e?.target as HTMLVideoElement;
+                  target?.classList?.remove("opacity-0");
+                }}
               />
             </div>
           );
