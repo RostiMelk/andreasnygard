@@ -1,16 +1,26 @@
 import React, { useEffect, useRef } from "react";
 import Image from "next/legacy/image";
+import MuxPlayer from "@mux/mux-player-react";
 import type { SanityImageAssetDocument } from "@sanity/client";
 import clsx from "@/lib/clsx";
+import type { VideoAssetDocument } from "sanity-plugin-mux-input";
 
 import { urlFor } from "@/lib/sanity.client";
 
 interface Props {
   className?: string;
-  imageRow?: {
-    _key: string;
-    asset: SanityImageAssetDocument;
-  }[];
+  imageRow: Array<
+    | {
+        _key: string;
+        _type: "image";
+        asset: SanityImageAssetDocument;
+      }
+    | {
+        _key: string;
+        _type: "mux.video";
+        asset: VideoAssetDocument;
+      }
+  >;
 }
 
 /**
@@ -48,6 +58,8 @@ export const ImageRow = ({ className, imageRow }: Props) => {
     };
   }, []);
 
+  console.log(imageRow);
+
   return (
     <section
       ref={ref}
@@ -56,23 +68,50 @@ export const ImageRow = ({ className, imageRow }: Props) => {
         className
       )}
     >
-      {imageRow?.map(({ asset, _key }) => (
-        <div key={_key} className="flex-1">
-          <Image
-            alt={""} // TODO: Add alt text
-            blurDataURL={urlFor(asset).width(50).quality(20).url()}
-            className="h-auto w-full"
-            height={asset?.metadata?.dimensions?.height ?? 0}
-            placeholder="blur"
-            quality={100}
-            src={urlFor(asset)
-              .width(imageWidth[imageRow.length] ?? 1800)
-              .quality(85)
-              .url()}
-            width={asset?.metadata?.dimensions?.width ?? 0}
-          />
-        </div>
-      ))}
+      {imageRow?.map(({ asset, _type, _key }) => {
+        if (_type === "image") {
+          return (
+            <div key={_key} className="flex-1">
+              <Image
+                alt={""} // TODO: Add alt text
+                blurDataURL={urlFor(asset).width(50).quality(20).url()}
+                className="h-auto w-full"
+                height={asset?.metadata?.dimensions?.height ?? 0}
+                placeholder="blur"
+                quality={100}
+                src={urlFor(asset)
+                  .width(imageWidth[imageRow.length] ?? 1800)
+                  .quality(85)
+                  .url()}
+                width={asset?.metadata?.dimensions?.width ?? 0}
+              />
+            </div>
+          );
+        }
+
+        if (_type === "mux.video") {
+          return (
+            <div
+              key={_key}
+              className="flex-1 [--controls:none] [--media-secondary-color:#fff]"
+              style={{
+                aspectRatio: asset?.data?.aspect_ratio?.replace(":", "/"),
+              }}
+            >
+              <MuxPlayer
+                autoPlay={true}
+                loop={true}
+                muted={true}
+                playbackId={asset.playbackId}
+                playsInline={true}
+                streamType="on-demand"
+                className="flex h-full bg-white"
+                disableCookies={true}
+              />
+            </div>
+          );
+        }
+      })}
     </section>
   );
 };

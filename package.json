@@ -9,6 +9,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@mux/mux-player-react": "^1.11.4",
     "@next/font": "^13.3.1",
     "@portabletext/react": "^3.0.0",
     "@sanity/client": "^6.1.1",
@@ -25,6 +26,7 @@
     "react-dom": "18.2.0",
     "react-is": "^18.2.0",
     "sanity": "^3.11.3",
+    "sanity-plugin-mux-input": "^2.1.1",
     "tailwind": "^4.0.0",
     "tailwind-merge": "^1.13.2",
     "zod": "^3.21.4"
