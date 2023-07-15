@@ -21,6 +21,10 @@ const directionMap: Record<string, Direction> = {
   ArrowRight: "RIGHT",
   ArrowDown: "DOWN",
   ArrowLeft: "LEFT",
+  w: "UP",
+  d: "RIGHT",
+  s: "DOWN",
+  a: "LEFT",
 };
 
 const moveMap: Record<Direction, Point> = {
