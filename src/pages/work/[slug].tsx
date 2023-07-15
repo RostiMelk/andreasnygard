@@ -35,6 +35,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps<WorkProps> = async (context) => {
   const { slug = "" } = context.params ?? {};
+
   const work: WorkProps["work"] = await client.fetch(
     groq`
       *[_type == "work" && slug.current == $slug][0] {
@@ -50,6 +51,10 @@ export const getStaticProps: GetStaticProps<WorkProps> = async (context) => {
     `,
     { slug }
   );
+
+  if (!work) {
+    return { notFound: true };
+  }
 
   return {
     props: {
