@@ -66,6 +66,15 @@ export default defineConfig({
                     S.document().documentId(documentId).schemaType("blog")
                   )
               ),
+            S.divider(),
+            S.listItem()
+              .title("404 Page")
+              .child(
+                S.editor()
+                  .id("notFoundPage")
+                  .schemaType("notFoundPage")
+                  .documentId("notFoundPage")
+              ),
           ]);
       },
     }),

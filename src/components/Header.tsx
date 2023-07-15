@@ -12,12 +12,14 @@ interface Props {
    */
   titleContinuation?: React.ReactNode;
   continuationClassName?: string;
+  hideTitle?: boolean;
 }
 
 export const Header = ({
   navItems,
   titleContinuation,
   continuationClassName,
+  hideTitle,
 }: Props) => {
   const title = "ANDREAS NYGÅRD";
 
@@ -32,12 +34,13 @@ export const Header = ({
           }
         )}
       >
-        <h1 className="text-base">
-          <Link className="hover:underline" href="/">
-            {title}
-          </Link>
-        </h1>
-
+        {!hideTitle && (
+          <h1 className="text-base">
+            <Link className="hover:underline" href="/">
+              {title}
+            </Link>
+          </h1>
+        )}
         <Navigation className="hidden lg:flex" navItems={navItems} />
       </header>
 
@@ -54,7 +57,8 @@ export const Header = ({
             continuationClassName
           )}
         >
-          <span className="invisible">{title}</span> {titleContinuation}
+          {!hideTitle && <span className="invisible">{title + " "}</span>}
+          {titleContinuation}
         </span>
       )}
     </>
@@ -68,7 +72,7 @@ const Navigation = ({
   className?: string;
   navItems?: MenuItem[];
 }) => (
-  <nav>
+  <nav className="col-span-2 col-start-2">
     <ul className={clsx("flex justify-between", className)}>
       {navItems?.map((item, i) => (
         <li key={i} className="[&>a]:first:pl-0 [&>a]:last:pr-0">

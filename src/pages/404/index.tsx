@@ -1,7 +1,11 @@
+import type { GetStaticProps } from "next";
 import React, { useRef, useState, useEffect, useCallback } from "react";
-import { Layout } from "@/components";
 import { isMobile } from "react-device-detect";
+
 import clsx from "@/lib/clsx";
+import type { NotFoundProps } from "./types";
+import { client, groq } from "@/lib/sanity.client";
+import { Layout, Wysiwyg } from "@/components";
 
 type Direction = "UP" | "RIGHT" | "DOWN" | "LEFT";
 
@@ -42,10 +46,10 @@ const oppositeDirections: Record<Direction, Direction> = {
   LEFT: "RIGHT",
 };
 
-// Gutter of 3 rows on top and bottom
-const gutter = 3;
+const topGutter = 4;
+const wallLockThreshold = 16;
 
-const Error404 = () => {
+const NotFound = ({ notFoundPage }: NotFoundProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [gridSize, setGridSize] = useState({ width: 0, height: 0 });
   const [snake, setSnake] = useState<Point[]>(initialSnake);
@@ -57,7 +61,7 @@ const Error404 = () => {
 
   const handleNewFood = useCallback(() => {
     setFood({
-      top: Math.floor(Math.random() * (gridSize.height - gutter * 2)) + gutter,
+      top: Math.floor(Math.random() * gridSize.height) + topGutter,
       left: Math.floor(Math.random() * gridSize.width),
     });
     setFoodType(foodType === 4 ? 0 : 4);
@@ -73,7 +77,7 @@ const Error404 = () => {
     [direction]
   );
 
-  const handleDeath = useCallback(() => {
+  const handleReset = useCallback(() => {
     setSnake(initialSnake);
     setDirection("RIGHT");
     setJustDied(true);
@@ -111,13 +115,13 @@ const Error404 = () => {
 
     // if crash into self
     if (snake.length > initialSnake.length && isOverlapping) {
-      handleDeath();
+      handleReset();
       return;
     }
 
     // if crash into wall and wall lock is on
     if (isCrashingIntoWall && wallLock) {
-      handleDeath();
+      handleReset();
       return;
     }
 
@@ -172,7 +176,7 @@ const Error404 = () => {
     const speed = Math.max(2, 500 - snake.length * 5 - gridSize.width * 3.2);
 
     // If snake is more than 15 long, lock the walls
-    if (snake.length > 15) {
+    if (snake.length >= wallLockThreshold) {
       setWallLock(true);
     }
 
@@ -187,7 +191,10 @@ const Error404 = () => {
       title="404 Not Found"
       description="Play a game of snake"
       ref={containerRef}
-      headerContinuation="not found"
+      headerContinuation={notFoundPage?.headerContinuation.map((block) => (
+        <Wysiwyg key={block._key} value={block} />
+      ))}
+      continuationClassName="grid [&>p]:indent-0"
       className={clsx(
         "blend-invert pointer-events-none fixed bottom-0 left-0 right-0 top-0 m-0 h-screen overflow-hidden p-0 transition-colors duration-500",
         "before:fixed before:bottom-0 before:left-0 before:right-0 before:top-0 before:border-0 before:transition-all before:duration-500",
@@ -196,6 +203,8 @@ const Error404 = () => {
           "before:m-1 before:border before:border-dashed": wallLock,
         }
       )}
+      hideFooter
+      hideTitle
     >
       {!isMobile &&
         Array.from({ length: gridSize.height }, (_, i) => i).map((i) => (
@@ -212,4 +221,18 @@ const Error404 = () => {
   );
 };
 
-export default Error404;
+export const getStaticProps: GetStaticProps = async () => {
+  const notFoundPage: NotFoundProps["notFoundPage"] = await client.fetch(groq`
+    *[_type == "notFoundPage"][0] {
+      headerContinuation,
+    }
+  `);
+
+  return {
+    props: {
+      notFoundPage,
+    },
+  };
+};
+
+export default NotFound;

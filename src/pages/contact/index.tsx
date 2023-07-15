@@ -19,8 +19,6 @@ export const getStaticProps: GetStaticProps = async () => {
   const contactPage: ContactProps["contactPage"] = await client.fetch(groq`
     *[_type == "contactPage"][0] {
       headerContinuation,
-      currentWork,
-      previousWork,
     }
   `);
 

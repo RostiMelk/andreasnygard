@@ -3,6 +3,7 @@ import {
   blog,
   contactPage,
   homePage,
+  notFoundPage,
   work,
 } from "@/schemas/documents";
 import { wysiwyg, imageRow } from "@/schemas/objects";
@@ -13,7 +14,9 @@ export const schemaTypes = [
   blog,
   contactPage,
   homePage,
+  notFoundPage,
   work,
+
   // Objects
   imageRow,
   wysiwyg,

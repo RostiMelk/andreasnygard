@@ -5,24 +5,29 @@ import clsx from "@/lib/clsx";
 import { Header, Footer } from "@/components";
 
 interface Props {
-  className?: string;
   children?: React.ReactNode;
-  title?: string;
+  className?: string;
+  continuationClassName?: string;
   description?: string;
   headerContinuation?: React.ReactNode;
-  continuationClassName?: string;
+
+  hideFooter?: boolean;
+  hideTitle?: boolean;
   onTimeDoubleClick?: () => void;
+  title?: string;
 }
 
 export const Layout = React.forwardRef<HTMLDivElement, Props>(function Layout(
   {
-    title,
-    description,
-    className,
     children,
-    headerContinuation,
+    className,
     continuationClassName,
+    description,
+    headerContinuation,
+    hideFooter,
+    hideTitle,
     onTimeDoubleClick,
+    title,
   }: Props,
   ref: React.Ref<HTMLDivElement>
 ) {
@@ -121,13 +126,14 @@ export const Layout = React.forwardRef<HTMLDivElement, Props>(function Layout(
             url: "/contact",
           },
         ]}
+        hideTitle={hideTitle}
       />
 
       <main className={clsx("container mb-20 w-screen", className)} ref={ref}>
         {children}
       </main>
 
-      <Footer onTimeDoubleClick={onTimeDoubleClick} />
+      {!hideFooter && <Footer onTimeDoubleClick={onTimeDoubleClick} />}
     </>
   );
 });
