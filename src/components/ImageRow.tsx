@@ -103,7 +103,7 @@ export const ImageRow = ({ className, imageRow }: Props) => {
                 playbackId={asset.playbackId}
                 playsInline={true}
                 streamType="on-demand"
-                className="-m-[1px] flex h-full bg-white object-cover opacity-0 transition-opacity duration-500 [clip-path:inset(1px)]"
+                className="flex h-full bg-white object-cover opacity-0 transition-opacity duration-500 [&>video]:-m-[1px] [&>video]:[clip-path:inset(1px)]"
                 disableCookies={true}
                 onLoadedData={(e) => {
                   const target = e?.target as HTMLVideoElement;
