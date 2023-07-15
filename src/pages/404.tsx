@@ -11,9 +11,9 @@ interface Point {
 }
 
 const initialSnake: Point[] = [
-  { top: 10, left: 0, type: 4 },
+  { top: 10, left: 1, type: 4 },
   { top: 10, left: 1, type: 0 },
-  { top: 10, left: 2, type: 4 },
+  { top: 10, left: 1, type: 4 },
 ];
 
 const directionMap: Record<string, Direction> = {
@@ -94,11 +94,20 @@ const Error404 = () => {
     );
 
     if (snake.length > initialSnake.length && isOverlapping) {
-      console.log("game over", initialSnake.length);
       setSnake(initialSnake);
       handleNewFood();
       setJustDied(true);
       return;
+    }
+
+    // if crash into wall
+    if (
+      newHead.top < gutter ||
+      newHead.top >= gridSize.height - gutter ||
+      newHead.left < 0 ||
+      newHead.left >= gridSize.width
+    ) {
+      console.log("game over");
     }
 
     setJustDied(false);
@@ -140,7 +149,7 @@ const Error404 = () => {
   }, []);
 
   useEffect(() => {
-    const speed = Math.max(100, 500 - snake.length * 10 - gridSize.width * 10);
+    const speed = Math.max(2, 500 - snake.length * 5 - gridSize.width * 3.2);
     const intervalId = setInterval(moveSnake, speed);
     return () => {
       clearInterval(intervalId);
@@ -153,7 +162,7 @@ const Error404 = () => {
       description="Play a game of snake"
       ref={containerRef}
       headerContinuation="not found"
-      className="blend-invert pointer-events-none fixed bottom-0 left-0 right-0 top-0 h-screen overflow-hidden"
+      className="blend-invert pointer-events-none fixed bottom-0 left-0 right-0 top-0 h-screen overflow-hidden p-0"
     >
       {!isMobile &&
         Array.from({ length: gridSize.height }, (_, i) => i).map((i) => (
