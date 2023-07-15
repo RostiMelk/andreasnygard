@@ -192,7 +192,7 @@ const Error404 = () => {
         "blend-invert pointer-events-none fixed bottom-0 left-0 right-0 top-0 m-0 h-screen overflow-hidden p-0 transition-colors duration-500",
         "before:fixed before:bottom-0 before:left-0 before:right-0 before:top-0 before:border-0 before:transition-all before:duration-500",
         {
-          "bg-red": justDied,
+          "bg-black": justDied,
           "before:m-1 before:border before:border-dashed": wallLock,
         }
       )}
