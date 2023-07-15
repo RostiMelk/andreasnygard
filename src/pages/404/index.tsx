@@ -61,7 +61,8 @@ const NotFound = ({ notFoundPage }: NotFoundProps) => {
 
   const handleNewFood = useCallback(() => {
     setFood({
-      top: Math.floor(Math.random() * gridSize.height) + topGutter,
+      top:
+        Math.floor(Math.random() * (gridSize.height - topGutter)) + topGutter,
       left: Math.floor(Math.random() * gridSize.width),
     });
     setFoodType(foodType === 4 ? 0 : 4);
