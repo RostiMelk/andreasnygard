@@ -79,7 +79,7 @@ const Error404 = () => {
     const isOverlapping = snake.some(
       (point) => point.top === newHead.top && point.left === newHead.left
     );
-    if (snake.length > 3 && isOverlapping) {
+    if (snake.length > initialSnake.length && isOverlapping) {
       setSnake(initialSnake);
       handleNewFood();
       return;
@@ -87,7 +87,7 @@ const Error404 = () => {
 
     if (newHead.top === food.top && newHead.left === food.left) {
       handleNewFood();
-    } else {
+    } else if (snake.length > initialSnake.length - 1) {
       snake.pop();
     }
 
