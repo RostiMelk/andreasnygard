@@ -49,6 +49,7 @@ const Error404 = () => {
       if (event.key in directionMap) {
         const newDirection = directionMap[event.key];
         if (newDirection !== oppositeDirections[direction]) {
+          if (!newDirection) return;
           setDirection(newDirection);
         }
       }
