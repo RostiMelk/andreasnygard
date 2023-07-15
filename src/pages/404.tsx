@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect, useCallback } from "react";
 import { Layout } from "@/components";
 import { isMobile } from "react-device-detect";
+import clsx from "@/lib/clsx";
 
 type Direction = "UP" | "RIGHT" | "DOWN" | "LEFT";
 
@@ -52,6 +53,7 @@ const Error404 = () => {
   const [food, setFood] = useState<Point>({ top: 10, left: 20 });
   const [foodType, setFoodType] = useState(0);
   const [justDied, setJustDied] = useState(false);
+  const [wallLock, setWallLock] = useState(false);
 
   const handleNewFood = useCallback(() => {
     setFood({
@@ -70,6 +72,14 @@ const Error404 = () => {
     },
     [direction]
   );
+
+  const handleDeath = useCallback(() => {
+    setSnake(initialSnake);
+    setDirection("RIGHT");
+    setJustDied(true);
+    setWallLock(false);
+    handleNewFood();
+  }, []);
 
   const moveSnake = useCallback(() => {
     const head = snake[0];
@@ -93,21 +103,31 @@ const Error404 = () => {
       (point) => point.top === newHead.top && point.left === newHead.left
     );
 
+    const isCrashingIntoWall =
+      (direction === "UP" && newHead.top === gridSize.height - 1) ||
+      (direction === "RIGHT" && newHead.left === 0) ||
+      (direction === "DOWN" && newHead.top === 0) ||
+      (direction === "LEFT" && newHead.left === gridSize.width - 1);
+
+    // if crash into self
     if (snake.length > initialSnake.length && isOverlapping) {
-      setSnake(initialSnake);
-      handleNewFood();
-      setJustDied(true);
+      handleDeath();
+      return;
+    }
+
+    // if crash into wall and wall lock is on
+    if (isCrashingIntoWall && wallLock) {
+      handleDeath();
       return;
     }
 
     // if crash into wall
     if (
-      newHead.top < gutter ||
-      newHead.top >= gridSize.height - gutter ||
-      newHead.left < 0 ||
+      newHead.top <= 0 ||
+      newHead.top >= gridSize.height ||
+      newHead.left <= 0 ||
       newHead.left >= gridSize.width
     ) {
-      console.log("game over");
     }
 
     setJustDied(false);
@@ -146,10 +166,16 @@ const Error404 = () => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [wallLock]);
 
   useEffect(() => {
     const speed = Math.max(2, 500 - snake.length * 5 - gridSize.width * 3.2);
+
+    // If snake is more than 15 long, lock the walls
+    if (snake.length > 4) {
+      setWallLock(true);
+    }
+
     const intervalId = setInterval(moveSnake, speed);
     return () => {
       clearInterval(intervalId);
@@ -161,8 +187,15 @@ const Error404 = () => {
       title="404 Not Found"
       description="Play a game of snake"
       ref={containerRef}
-      headerContinuation="not found"
-      className="blend-invert pointer-events-none fixed bottom-0 left-0 right-0 top-0 h-screen overflow-hidden p-0"
+      headerContinuation={`not found: ${snake.length}`}
+      className={clsx(
+        "blend-invert pointer-events-none fixed bottom-0 left-0 right-0 top-0 m-0 h-screen overflow-hidden p-0 transition-colors duration-500",
+        "before:fixed before:bottom-0 before:left-0 before:right-0 before:top-0 before:border-0 before:transition-all before:duration-500",
+        {
+          "bg-red": justDied,
+          "before:m-1 before:border before:border-dashed": wallLock,
+        }
+      )}
     >
       {!isMobile &&
         Array.from({ length: gridSize.height }, (_, i) => i).map((i) => (

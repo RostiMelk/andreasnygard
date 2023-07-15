@@ -3,6 +3,13 @@ import { type Config } from "tailwindcss";
 export default {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
+    colors: {
+      transparent: "transparent",
+      current: "currentColor",
+      black: "#000",
+      white: "#fff",
+      red: "#880808",
+    },
     borderWidth: {
       DEFAULT: "3px",
       0: "0",
