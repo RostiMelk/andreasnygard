@@ -29,10 +29,11 @@ export const Header = ({
     <>
       <header
         className={clsx(
-          "lg:two-col blend-invert container fixed z-10 lg:top-8 lg:text-left",
+          "blend-invert container fixed z-10 lg:top-8 lg:text-left",
           {
             "top-8 text-right": !titleContinuation,
             "top-20 text-left": titleContinuation,
+            "lg:two-col": !hideNav,
           }
         )}
       >
@@ -61,8 +62,9 @@ export const Header = ({
       {titleContinuation && (
         <span
           className={clsx(
-            "container m-0 mb-11 mt-20 block text-base lg:mt-8 lg:w-1/2 [&>p:nth-child(2)]:inline",
-            continuationClassName
+            "container m-0 mb-11 mt-20 block text-base lg:mt-8 [&>p:nth-child(2)]:inline",
+            continuationClassName,
+            { "lg:w-1/3": !hideNav }
           )}
         >
           {!hideTitle && <span className="invisible">{title + " "}</span>}

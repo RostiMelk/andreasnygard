@@ -46,7 +46,7 @@ const oppositeDirections: Record<Direction, Direction> = {
   LEFT: "RIGHT",
 };
 
-const topGutter = 4;
+const topGutter = 3;
 const wallLockThreshold = 16;
 
 const NotFound = ({ notFoundPage }: NotFoundProps) => {
@@ -206,6 +206,7 @@ const NotFound = ({ notFoundPage }: NotFoundProps) => {
       )}
       hideFooter
       hideTitle
+      hideNav
     >
       {!isMobile &&
         Array.from({ length: gridSize.height }, (_, i) => i).map((i) => (

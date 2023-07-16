@@ -34,6 +34,9 @@ export default {
           "50%": { opacity: "1" },
         },
       },
+      screens: {
+        notouch: { raw: "(hover: hover)" },
+      },
     },
   },
   plugins: [],

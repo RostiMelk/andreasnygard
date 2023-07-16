@@ -30,7 +30,7 @@ const Blog = ({ blog }: BlogProps) => {
         return (
           <div
             key={_id}
-            className="mb-7 w-full will-change-transform hover:z-10 lg:absolute lg:mb-0 lg:max-w-[400px] lg:opacity-0 lg:transition-opacity"
+            className="mb-7 w-full will-change-transform hover:z-10 md:!max-w-[400px] notouch:absolute  notouch:mb-0 notouch:max-w-[70vw] notouch:opacity-0 notouch:transition-opacity"
             ref={(el) => (imageWrapperRefs.current[index] = el)}
           >
             <Image

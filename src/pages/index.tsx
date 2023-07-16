@@ -69,7 +69,7 @@ const Home = ({ homePage, work }: HomeProps) => {
                 !notClickable && !isMobile && handleMouseUp(e, slug.current)
               }
               key={_id}
-              className="blend-invert group mb-7 inline-flex w-full flex-col will-change-transform hover:z-10 hover:underline lg:absolute lg:mb-0 lg:max-w-[400px] lg:opacity-0 lg:transition-opacity [&href]:cursor-pointer"
+              className="blend-invert group mb-7 inline-flex w-full flex-col will-change-transform hover:z-10 hover:underline md:!max-w-[400px] notouch:absolute notouch:mb-0 notouch:max-w-[70vw] notouch:opacity-0 notouch:transition-opacity [&href]:cursor-pointer"
               ref={(el) => (imageWrapperRefs.current[index] = el)}
               onClick={(e) => !isMobile && e.preventDefault()}
               href={notClickable ? undefined : `/work/${slug.current}`}
@@ -85,7 +85,7 @@ const Home = ({ homePage, work }: HomeProps) => {
                 src={urlFor(mainImage)?.width(600).quality(85).url()}
                 width={mainImage?.metadata?.dimensions?.width ?? 0}
               />
-              <h4 className="mt-4 text-base group-hover:visible lg:invisible">
+              <h4 className="mt-4 text-base group-hover:visible notouch:invisible">
                 {shortTitle ?? title}
               </h4>
             </a>
