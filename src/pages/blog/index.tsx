@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import type { GetStaticProps } from "next";
-import Image from "next/legacy/image";
+import Image from "next/image";
 
 import type { BlogProps } from "./types";
 import { client, groq, urlFor } from "@/lib/sanity.client";
@@ -35,9 +35,11 @@ const Blog = ({ blog }: BlogProps) => {
           >
             <Image
               alt=""
-              blurDataURL={urlFor(image).width(50).quality(20).url()}
+              // blurDataURL={urlFor(image).width(50).quality(20).url()}
+              blurDataURL={image.metadata.lqip}
               className="pointer-events-none select-none object-cover"
               height={image?.metadata?.dimensions?.height ?? 0}
+              loading={index <= 3 ? "eager" : "lazy"}
               placeholder="blur"
               quality={100}
               sizes="100vw"

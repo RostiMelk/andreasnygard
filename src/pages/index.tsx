@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import type { GetStaticProps } from "next";
-import Image from "next/legacy/image";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { isMobile } from "react-device-detect";
 
@@ -9,8 +9,11 @@ import { client, groq, urlFor } from "@/lib/sanity.client";
 import { Layout, Wysiwyg } from "@/components";
 import { useMatterGrid } from "@/hooks";
 
+type WrapperRef = HTMLAnchorElement | HTMLDivElement | null;
+
 const Home = ({ homePage, work }: HomeProps) => {
-  const imageWrapperRefs = useRef<(HTMLAnchorElement | null)[]>([]);
+  // const imageWrapperRefs = useRef<(HTMLAnchorElement | null)[]>([]);
+  const imageWrapperRefs = useRef<WrapperRef[]>([]);
   const mainRef = useRef<HTMLDivElement>(null);
   const { engineRef } = useMatterGrid({
     imageWrapperRefs,
@@ -60,25 +63,39 @@ const Home = ({ homePage, work }: HomeProps) => {
     >
       {work?.map(
         ({ _id, title, shortTitle, slug, notClickable, mainImage }, index) => {
+          const Wrapper = notClickable ? "div" : "a";
+
+          console.log("mainImage", mainImage);
+
           return (
-            <a
+            <Wrapper
+              aria-label={notClickable ? undefined : title}
+              className="blend-invert group mb-7 inline-flex w-full flex-col will-change-transform hover:z-10 hover:underline md:!max-w-[400px] notouch:absolute notouch:mb-0 notouch:max-w-[70vw] notouch:opacity-0 notouch:transition-opacity [&href]:cursor-pointer"
+              href={notClickable ? undefined : `/work/${slug.current}`}
+              key={_id}
+              onClick={(e) => !notClickable && !isMobile && e.preventDefault()}
               onMouseDown={(e) =>
-                !notClickable && !isMobile && handleMouseDown(e)
+                !notClickable &&
+                !isMobile &&
+                handleMouseDown(e as React.MouseEvent<HTMLAnchorElement>)
               }
               onMouseUp={(e) =>
-                !notClickable && !isMobile && handleMouseUp(e, slug.current)
+                !notClickable &&
+                !isMobile &&
+                handleMouseUp(
+                  e as React.MouseEvent<HTMLAnchorElement>,
+                  slug.current
+                )
               }
-              key={_id}
-              className="blend-invert group mb-7 inline-flex w-full flex-col will-change-transform hover:z-10 hover:underline md:!max-w-[400px] notouch:absolute notouch:mb-0 notouch:max-w-[70vw] notouch:opacity-0 notouch:transition-opacity [&href]:cursor-pointer"
-              ref={(el) => (imageWrapperRefs.current[index] = el)}
-              onClick={(e) => !isMobile && e.preventDefault()}
-              href={notClickable ? undefined : `/work/${slug.current}`}
+              ref={(el: WrapperRef) => (imageWrapperRefs.current[index] = el)}
             >
               <Image
                 alt=""
-                blurDataURL={urlFor(mainImage).width(50).quality(20).url()}
+                // blurDataURL={urlFor(mainImage).width(50).quality(20).url()}
+                blurDataURL={mainImage.metadata.lqip}
                 className="pointer-events-none select-none object-cover grayscale  group-hover:grayscale-0"
                 height={mainImage?.metadata?.dimensions?.height ?? 0}
+                loading={index <= 3 ? "eager" : "lazy"}
                 placeholder="blur"
                 quality={100}
                 sizes="100vw"
@@ -88,7 +105,7 @@ const Home = ({ homePage, work }: HomeProps) => {
               <h4 className="mt-4 text-base group-hover:visible notouch:invisible">
                 {shortTitle ?? title}
               </h4>
-            </a>
+            </Wrapper>
           );
         }
       )}

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import Image from "next/legacy/image";
+import Image from "next/image";
 import MuxPlayer from "@mux/mux-player-react";
 import type { SanityImageAssetDocument } from "@sanity/client";
 import clsx from "@/lib/clsx";
@@ -72,7 +72,8 @@ export const ImageRow = ({ className, imageRow }: Props) => {
             <div key={_key} className="flex-1">
               <Image
                 alt={""} // TODO: Add alt text
-                blurDataURL={urlFor(asset).width(50).quality(20).url()}
+                // blurDataURL={urlFor(asset).width(50).quality(20).url()}
+                blurDataURL={asset.metadata.lqip}
                 className="h-auto w-full"
                 height={asset?.metadata?.dimensions?.height ?? 0}
                 placeholder="blur"

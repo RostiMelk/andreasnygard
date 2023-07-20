@@ -21,7 +21,7 @@ const initialSnake: Point[] = [
   { top: 10, left: 1, type: 4 },
 ];
 
-const directionMap: Record<string, Direction> = {
+const keyMap: Record<string, Direction> = {
   ArrowUp: "UP",
   ArrowRight: "RIGHT",
   ArrowDown: "DOWN",
@@ -70,7 +70,7 @@ const NotFound = ({ notFoundPage }: NotFoundProps) => {
 
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
-      const newDirection = directionMap[event.key];
+      const newDirection = keyMap[event.key];
       if (newDirection && newDirection !== oppositeDirections[direction]) {
         setDirection(newDirection);
       }
@@ -137,7 +137,16 @@ const NotFound = ({ notFoundPage }: NotFoundProps) => {
 
     setJustDied(false);
     setSnake([newHead, ...snake]);
-  }, [snake, direction, gridSize, food, handleNewFood, justDied]);
+  }, [
+    snake,
+    direction,
+    gridSize,
+    food,
+    justDied,
+    wallLock,
+    handleNewFood,
+    handleReset,
+  ]);
 
   useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);

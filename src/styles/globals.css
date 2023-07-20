@@ -16,7 +16,7 @@
     @apply lg:grid lg:grid-cols-2 lg:gap-8;
   }
   .col-right {
-    @apply md:ml-auto md:w-1/2 md:pl-4;
+    @apply md:ml-auto md:w-1/2;
   }
 }
 
