@@ -92,7 +92,7 @@ const Home = ({ homePage, work }: HomeProps) => {
               <Image
                 alt=""
                 // blurDataURL={urlFor(mainImage).width(50).quality(20).url()}
-                blurDataURL={mainImage.metadata.lqip}
+                blurDataURL={image?.metadata?.lqip}
                 className="pointer-events-none select-none object-cover grayscale  group-hover:grayscale-0"
                 height={mainImage?.metadata?.dimensions?.height ?? 0}
                 loading={index <= 3 ? "eager" : "lazy"}

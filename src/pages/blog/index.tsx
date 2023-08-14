@@ -36,7 +36,7 @@ const Blog = ({ blog }: BlogProps) => {
             <Image
               alt=""
               // blurDataURL={urlFor(image).width(50).quality(20).url()}
-              blurDataURL={image.metadata.lqip}
+              blurDataURL={image?.metadata?.lqip}
               className="pointer-events-none select-none object-cover"
               height={image?.metadata?.dimensions?.height ?? 0}
               loading={index <= 3 ? "eager" : "lazy"}
