@@ -18,11 +18,14 @@ export default defineType({
       options: {
         hotspot: true,
       },
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "publishedAt",
       title: "Published at",
       type: "datetime",
+      initialValue: (new Date()).toISOString(),
+      validation: (Rule) => Rule.required(),
     }),
   ],
 

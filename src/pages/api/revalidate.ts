@@ -8,6 +8,7 @@ const revalidatationMap: { [key: string]: string[] } = {
   work: ["/", "/work/[slug]"],
   blog: ["/blog"],
   about: ["/about"],
+  contact: ["/contact"],
 };
 
 export default async function revalidate(
