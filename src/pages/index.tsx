@@ -61,8 +61,9 @@ const Home = ({ homePage, work }: HomeProps) => {
         }
       }}
     >
-      {work?.map(
-        ({ _id, title, shortTitle, slug, notClickable, mainImage }, index) => {
+      {work
+        ?.filter(({ mainImage }) => mainImage)
+        .map(({ _id, title, shortTitle, slug, notClickable, mainImage }, i) => {
           const Wrapper = notClickable ? "div" : "a";
 
           console.log("mainImage", mainImage);
@@ -87,15 +88,14 @@ const Home = ({ homePage, work }: HomeProps) => {
                   slug.current
                 )
               }
-              ref={(el: WrapperRef) => (imageWrapperRefs.current[index] = el)}
+              ref={(el: WrapperRef) => (imageWrapperRefs.current[i] = el)}
             >
               <Image
                 alt=""
-                // blurDataURL={urlFor(mainImage).width(50).quality(20).url()}
                 blurDataURL={mainImage?.metadata?.lqip}
                 className="pointer-events-none select-none object-cover grayscale  group-hover:grayscale-0"
                 height={mainImage?.metadata?.dimensions?.height ?? 0}
-                loading={index <= 3 ? "eager" : "lazy"}
+                loading={i <= 3 ? "eager" : "lazy"}
                 placeholder="blur"
                 quality={100}
                 sizes="100vw"
@@ -107,8 +107,7 @@ const Home = ({ homePage, work }: HomeProps) => {
               </h4>
             </Wrapper>
           );
-        }
-      )}
+        })}
     </Layout>
   );
 };

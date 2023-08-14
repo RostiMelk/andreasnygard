@@ -72,7 +72,6 @@ export const ImageRow = ({ className, imageRow }: Props) => {
             <div key={_key} className="flex-1">
               <Image
                 alt={""} // TODO: Add alt text
-                // blurDataURL={urlFor(asset).width(50).quality(20).url()}
                 blurDataURL={asset?.metadata?.lqip}
                 className="h-auto w-full"
                 height={asset?.metadata?.dimensions?.height ?? 0}

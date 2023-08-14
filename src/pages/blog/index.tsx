@@ -26,29 +26,30 @@ const Blog = ({ blog }: BlogProps) => {
         }
       }}
     >
-      {blog?.map(({ _id, image }, index) => {
-        return (
-          <div
-            key={_id}
-            className="mb-7 w-full will-change-transform hover:z-10 md:!max-w-[400px] notouch:absolute  notouch:mb-0 notouch:max-w-[70vw] notouch:opacity-0 notouch:transition-opacity"
-            ref={(el) => (imageWrapperRefs.current[index] = el)}
-          >
-            <Image
-              alt=""
-              // blurDataURL={urlFor(image).width(50).quality(20).url()}
-              blurDataURL={image?.metadata?.lqip}
-              className="pointer-events-none select-none object-cover"
-              height={image?.metadata?.dimensions?.height ?? 0}
-              loading={index <= 3 ? "eager" : "lazy"}
-              placeholder="blur"
-              quality={100}
-              sizes="100vw"
-              src={urlFor(image)?.width(600).quality(85).url()}
-              width={image?.metadata?.dimensions?.width ?? 0}
-            />
-          </div>
-        );
-      })}
+      {blog
+        ?.filter((item) => item.image)
+        .map(({ _id, image }, index) => {
+          return (
+            <div
+              key={_id}
+              className="mb-7 w-full will-change-transform hover:z-10 md:!max-w-[400px] notouch:absolute  notouch:mb-0 notouch:max-w-[70vw] notouch:opacity-0 notouch:transition-opacity"
+              ref={(el) => (imageWrapperRefs.current[index] = el)}
+            >
+              <Image
+                alt=""
+                blurDataURL={image?.metadata?.lqip}
+                className="pointer-events-none select-none object-cover"
+                height={image?.metadata?.dimensions?.height ?? 0}
+                loading={index <= 3 ? "eager" : "lazy"}
+                placeholder="blur"
+                quality={100}
+                sizes="100vw"
+                src={urlFor(image)?.width(600).quality(85).url()}
+                width={image?.metadata?.dimensions?.width ?? 0}
+              />
+            </div>
+          );
+        })}
     </Layout>
   );
 };
