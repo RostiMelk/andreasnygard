@@ -16,6 +16,7 @@ const config = {
   useCdn: false,
   apiVersion: "2023-03-04",
   studioUrl: "/cms",
+  perspective: "published" as const,
 };
 
 export const client: SanityClient = createClient(config);
