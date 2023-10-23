@@ -9,6 +9,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@babel/traverse": "^7.23.2",
     "@mux/mux-player-react": "^1.11.4",
     "@next/font": "^13.3.1",
     "@portabletext/react": "^3.0.0",
