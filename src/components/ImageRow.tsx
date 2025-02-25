@@ -67,7 +67,7 @@ export const ImageRow = ({ className, imageRow }: Props) => {
       )}
     >
       {imageRow?.map(({ asset, _type, _key }) => {
-        if (_type === "image") {
+        if (_type === "image" && asset) {
           return (
             <div key={_key} className="flex-1">
               <Image
