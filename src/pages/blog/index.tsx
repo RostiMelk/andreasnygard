@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import type { GetStaticProps } from "next";
-import Image from "next/image";
+import { Image } from "@/components/Image";
 
 import type { BlogProps } from "./types";
 import { client, groq, urlFor } from "@/lib/sanity.client";
@@ -42,8 +42,6 @@ const Blog = ({ blog }: BlogProps) => {
                 height={image?.metadata?.dimensions?.height ?? 0}
                 loading={index <= 3 ? "eager" : "lazy"}
                 placeholder="blur"
-                quality={100}
-                sizes="100vw"
                 src={urlFor(image)?.width(600).quality(85).url()}
                 width={image?.metadata?.dimensions?.width ?? 0}
               />

@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import type { GetStaticProps } from "next";
-import Image from "next/image";
+import { Image } from "@/components/Image";
 import { useRouter } from "next/router";
 import { isMobile } from "react-device-detect";
 
@@ -12,7 +12,6 @@ import { useMatterGrid } from "@/hooks";
 type WrapperRef = HTMLAnchorElement | HTMLDivElement | null;
 
 const Home = ({ homePage, work }: HomeProps) => {
-  // const imageWrapperRefs = useRef<(HTMLAnchorElement | null)[]>([]);
   const imageWrapperRefs = useRef<WrapperRef[]>([]);
   const mainRef = useRef<HTMLDivElement>(null);
   const { engineRef } = useMatterGrid({
@@ -66,8 +65,6 @@ const Home = ({ homePage, work }: HomeProps) => {
         .map(({ _id, title, shortTitle, slug, notClickable, mainImage }, i) => {
           const Wrapper = notClickable ? "div" : "a";
 
-          console.log("mainImage", mainImage);
-
           return (
             <Wrapper
               aria-label={notClickable ? undefined : title}
@@ -97,8 +94,6 @@ const Home = ({ homePage, work }: HomeProps) => {
                 height={mainImage?.metadata?.dimensions?.height ?? 0}
                 loading={i <= 3 ? "eager" : "lazy"}
                 placeholder="blur"
-                quality={100}
-                sizes="100vw"
                 src={urlFor(mainImage)?.width(600).quality(85).url()}
                 width={mainImage?.metadata?.dimensions?.width ?? 0}
               />

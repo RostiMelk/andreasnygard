@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import Image from "next/image";
+import { Image } from "@/components/Image";
 import MuxPlayer from "@mux/mux-player-react";
 import type { SanityImageAssetDocument } from "@sanity/client";
 import clsx from "@/lib/clsx";
@@ -76,7 +76,6 @@ export const ImageRow = ({ className, imageRow }: Props) => {
                 className="h-auto w-full"
                 height={asset?.metadata?.dimensions?.height ?? 0}
                 placeholder="blur"
-                quality={100}
                 src={urlFor(asset)
                   .width(imageWidth[imageRow.length] ?? 1800)
                   .quality(85)

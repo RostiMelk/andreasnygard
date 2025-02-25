@@ -103,13 +103,15 @@ export const useMatterGrid = ({
     ]);
 
     const rerender = () => {
-      images.forEach((image) => image.render());
+      for (const image of images) {
+        image.render();
+      }
       Matter.Engine.update(engine);
       requestRef.current = requestAnimationFrame(rerender);
     };
 
     rerender();
-  }, [imageWrapperRefs, mainRef]);
+  }, [imageWrapperRefs, mainRef, gutter, spacing]);
 
   useEffect(() => {
     if (isMobile) return;
