@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import { forwardRef, useState, useEffect, useRef } from "react";
 import cn from "clsx";
 
 /**
@@ -17,9 +17,27 @@ interface Props extends React.HTMLAttributes<HTMLImageElement> {
 
 export const Image = forwardRef<HTMLImageElement, Props>(
   ({ blurDataURL, alt, loading = "lazy", ...props }, ref) => {
+    const [isLoaded, setIsLoaded] = useState(false);
+    const imageRef = useRef<HTMLImageElement>(null);
+
+    useEffect(() => {
+      const img = imageRef.current;
+      if (!img) return;
+
+      const handleLoad = () => setIsLoaded(true);
+
+      if (img.complete) {
+        setIsLoaded(true);
+      } else {
+        img.addEventListener("load", handleLoad);
+      }
+
+      return () => img.removeEventListener("load", handleLoad);
+    }, []);
+
     return (
       <div className="relative overflow-hidden">
-        {blurDataURL && (
+        {blurDataURL && !isLoaded && (
           <img
             src={blurDataURL}
             alt={alt}
@@ -33,7 +51,11 @@ export const Image = forwardRef<HTMLImageElement, Props>(
 
         <img
           {...props}
-          ref={ref}
+          ref={(node) => {
+            if (typeof ref === "function") ref(node);
+            else if (ref) ref.current = node;
+            if (imageRef) imageRef.current = node;
+          }}
           alt={alt}
           loading={loading}
           className={cn("relative h-full w-full", props.className)}
