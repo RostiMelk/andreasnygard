@@ -18,7 +18,7 @@ interface Props extends React.HTMLAttributes<HTMLImageElement> {
 export const Image = forwardRef<HTMLImageElement, Props>(
   ({ blurDataURL, alt, loading = "lazy", ...props }, ref) => {
     const [isLoaded, setIsLoaded] = useState(false);
-    const imageRef = useRef<HTMLImageElement>(null);
+      const imageRef = useRef<HTMLImageElement | null>(null);
 
     useEffect(() => {
       const img = imageRef.current;
@@ -54,7 +54,7 @@ export const Image = forwardRef<HTMLImageElement, Props>(
           ref={(node) => {
             if (typeof ref === "function") ref(node);
             else if (ref) ref.current = node;
-            if (imageRef) imageRef.current = node;
+            imageRef.current = node;
           }}
           alt={alt}
           loading={loading}
